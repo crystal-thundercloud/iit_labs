@@ -1,4 +1,9 @@
-#include <stdio.h>
+/*
+Даны три точки A, B, C на числовой оси. Точка C расположена
+между точками A и B. Найти произведение длин отрезков AC и BC
+*/
+
+include <stdio.h>
 #include <math.h>
 
 int main()
