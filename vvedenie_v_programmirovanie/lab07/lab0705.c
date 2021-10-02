@@ -16,5 +16,6 @@ int main()
     printf("Введите B: ");
     scanf("%g", &b);
     
-    printf("Для уравнения %g*x+%g=0 x=%g", a, b, -b/a);
+    if (a!=0) printf("Для уравнения %g*x+%g=0 x=%g", a, b, -b/a);
+    else printf("Нельзя посчитать для a=0");
 }
