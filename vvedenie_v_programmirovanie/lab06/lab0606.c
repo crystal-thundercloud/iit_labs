@@ -11,9 +11,9 @@ int main()
     printf("Введите число: ");
     scanf("%g", &a); //ввод a
     
-    b = a*a;
-    a = b*b;
-    b = a*a;
+    b = a*a; //2
+    a = b*b; //4
+    b = a*a; //8
     
     printf("A^8 = %g", b); //вывод значения A^8
 }
