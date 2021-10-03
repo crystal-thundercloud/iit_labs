@@ -18,5 +18,8 @@ int main()
     x = (c1*b2-c2*b1)/((a1*b2)-(a2*b1));
     y = (a1*c2-a2*c1)/((a1*b2)-(a2*b1));
     
-    printf("x = %g\ny = %g", x, y);
+    printf("Решение для системы уравнений");
+    printf("\n%g*x + %g*y = %g", a1, b1, c1);
+    printf("\n%g*x + %g*y = %g:", a2, b2, c2);
+    printf("\nx = %g\ny = %g", x, y);
 }
