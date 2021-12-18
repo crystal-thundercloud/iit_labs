@@ -106,14 +106,21 @@ for (int i=0; i<a3.size(); i++) {
     if (a3[i]>a3[max]) max=i;
 }
 
-a3.insert(bgn3+max+1, 0);
-/* переназначаем указатель на начало вектора,
-потому что он неактуален после вставки значений,
-вставляет следующее значение на не то место
-и выдаёт предупреждение double free or corruption */
+/* переназначаем указатель на начало вектора после вставки,
+потому что он становится неактуальным и выдаёт предупреждение
+double free or corruption */
 
-bgn3 = a3.cbegin();
-a3.insert(bgn3+min, 0);
+if (min<max) {
+    a3.insert(bgn3+max+1, 0);
+    bgn3 = a3.cbegin();
+    a3.insert(bgn3+min, 0);
+}
+
+else {
+    a3.insert(bgn3+max+1, 0);
+    bgn3 = a3.cbegin();
+    a3.insert(bgn3+min+1, 0);
+}
 
 cout<<"Изменённый массив: ";
 for (int i=0; i<a3.size(); i++) {
@@ -171,7 +178,7 @@ for (int i=0; i<a5.size(); i++) {
     bgn5 = a5.cbegin();
     if (a5[i]>0) {
         a5.insert(bgn5+i, 0);
-        i++;
+        i++; //а то будет вечный цикл :D
     }
 }
 
