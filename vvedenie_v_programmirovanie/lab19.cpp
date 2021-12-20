@@ -24,8 +24,14 @@ for (int i=0; i<n; i++) {
     cin>>a1[i];
 }
 
-for (int i=0; i<a1.size(); i++) {
-    if (a1[i]==a1[i+1]) a1.erase(a1.cbegin()+i+1);
+auto bgn1 = a1.cbegin();
+
+for (int i=0; i<a1.size()-1; i++) {
+    bgn1 = a1.cbegin();
+    if (a1[i]==a1[i+1]) {
+        a1.erase(bgn1+i+1);
+        i--;
+    }
 }
 
 for (int i=0; i<a1.size(); i++) {
