@@ -1,5 +1,6 @@
 #define _USE_MATH_DEFINES
 #include <iostream>
+#include <iomanip>
 #include <math.h>
 using namespace std;
 
@@ -17,7 +18,7 @@ void iter(double x, double e) { //простые итерации
     }
     while (abs(x-temp)>=e);
     cout<<"\nМетод простых итераций:"<<endl;
-    cout<<"Корень x="<<x<<"\nНайден на итерации "<<i<<"\nПри точности "<<e<<endl;
+    cout<<"Корень x="<<setprecision(13)<<x<<"\nНайден на итерации "<<i<<"\nПри точности "<<e<<endl;
 }
 
 void dych(double a, double b, double x, double e) { //дихотомия
@@ -32,7 +33,7 @@ void dych(double a, double b, double x, double e) { //дихотомия
     }
     while (abs(x-temp)>=e);
     cout<<"\nМетод дихотомии:"<<endl;
-    cout<<"Корень x="<<x<<"\nНайден на итерации "<<i<<"\nПри точности "<<e<<endl;
+    cout<<"Корень x="<<setprecision(13)<<x<<"\nНайден на итерации "<<i<<"\nПри точности "<<e<<endl;
 }
 
 int main()
