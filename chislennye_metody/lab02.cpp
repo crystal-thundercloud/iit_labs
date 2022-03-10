@@ -22,14 +22,12 @@ void iter(double x, double e) { //простые итерации
 
 void dych(double a, double b, double x, double e) { //дихотомия
     int i=0;
-    double temp, tempa, tempb;
+    double temp;
     do {
         temp = x;
         x = (a+b)/2;
-        tempa = a;
-        tempb = b;
-        a = mainfunc(x)>0? x: tempa;
-        b = mainfunc(x)<0? x: tempb;
+        a = mainfunc(x)>0? x: a;
+        b = mainfunc(x)<0? x: b;
         i++;
     }
     while (abs(x-temp)>=e);
