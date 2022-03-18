@@ -133,8 +133,8 @@ cin>>bykva;
 
 etype dolj;
 
-dolj = (bykva=="l")? laborer: ((bykva=="s")? secretary: ((bykva=="m")? manager : ((bykva=="a")? accountant : ((bykva=="e")? executive: researcher))));
-cout>>dolj;
+dolj = (bykva=='l')? laborer: ((bykva=='s')? secretary: ((bykva=='m')? manager : ((bykva=='a')? accountant : ((bykva=='e')? executive: researcher))));
+cout<<dolj;
 
 
 
