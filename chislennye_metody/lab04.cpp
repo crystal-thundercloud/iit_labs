@@ -15,7 +15,7 @@ y = cos(x+0.5)-2)"<<endl;
     do {
         x1 = x;
         y1 = y;
-        x = (sin(y1-1))/2;
+        x = (sin(y1)-1)/2;
         y = cos(x1+0.5)-2;
         i++;
     }
@@ -23,6 +23,8 @@ y = cos(x+0.5)-2)"<<endl;
     while ((abs(x-x1)>e)||(abs(y-y1)>e));
     
     cout<<"Корни уравнений:\nx = "<<setprecision(13)<<x<<"\ny = "<<y<<"\nНайдены на итерации "<<i<<endl;
+    cout<<setprecision(20)<<cos(x+0.5)-y-2<<endl;
+    cout<<setprecision(20)<<sin(y)-2*x-1<<endl;
 }
 
 void newton(double e) {
@@ -56,7 +58,9 @@ void newton(double e) {
     
     while ((abs(dx)>e)||(abs(dy)>e));
     
-    cout<<"Корни уравнений:\nx = "<<setprecision(13)<<x<<"\ny = "<<y<<"\nНайдены на итерации "<<i;
+    cout<<"Корни уравнений:\nx = "<<setprecision(13)<<x<<"\ny = "<<y<<"\nНайдены на итерации "<<i<<endl;
+    cout<<setprecision(20)<<cos(x+0.5)-y-2<<endl;
+    cout<<setprecision(20)<<sin(y)-2*x-1<<endl;
 }
 
 int main()
