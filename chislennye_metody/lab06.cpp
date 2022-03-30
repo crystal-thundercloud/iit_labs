@@ -6,7 +6,7 @@ using namespace std;
 
 int main()
 {
-cout<<R"(Вариант 15:
+cout<<R"(Метод промоугольников. Вариант 15:
 120
   ∫(x^4dx)/(4x^5+2)
  0)"<<endl;
