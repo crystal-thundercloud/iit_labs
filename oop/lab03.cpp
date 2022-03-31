@@ -244,7 +244,7 @@ tmsum.hours = sumsec/3600;
 tmsum.minutes = (sumsec-(tmsum.hours*3600))/60;
 tmsum.seconds = (sumsec-(tmsum.hours*3600))-(tmsum.minutes*60);
 
-cout<<"Сумма введённых значений: "<<tmsum.hours<<trash<<tmsum.minutes<<trash<<tmsum.seconds;
+cout<<"Сумма введённых значений: "<<tmsum.hours<<trash<<tmsum.minutes<<trash<<tmsum.seconds<<endl;
 
 cout<<"\n"<<R"(12. Переработайте программу-калькулятор для дробей, описанную в упражнении 12 комплекта упражнений 3 так,
 чтобы каждая из дробей хранилась как значение переменной типа struct fraction, по аналогии с упражнением 8 этого комплекса упражнений.)"<<endl;
