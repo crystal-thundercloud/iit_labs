@@ -16,11 +16,11 @@ int n;
 cout<<"Введите целое число n: "; //450
 cin>>n;
     
-double a = 0, b = 120, h = (b-a)/n, f[n], x[n], fa, fb, sum;
+double a = 0, b = 120, h = (b-a)/n, f[n], x[n+1], fa, fb, sum;
 fa = (pow(a,4))/((4*pow(a,5))+2);
 fb = (pow(b,4))/((4*pow(b,5))+2);
     
-for (int i=0; i<n; i++) {
+for (int i=1; i<=n; i++) {
     x[i] = a+i*h;
     f[i] = (pow(x[i],4))/((4*pow(x[i],5))+2);
     sum += f[i];
