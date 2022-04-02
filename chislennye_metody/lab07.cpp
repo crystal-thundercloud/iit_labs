@@ -26,7 +26,7 @@ for (int i=1; i<=n; i++) {
     sum += f[i];
 }
     
-cout<<setprecision(20)<<h*(0.5*(fa+fb)+sum)<<"\n"<<"Вычисленное значение: 1.23153"<<endl;
+cout<<setprecision(14)<<h*(0.5*(fa+fb)+sum)<<"\n"<<"Вычисленное значение: 1.23153"<<endl;
 
 return 0;
 }
