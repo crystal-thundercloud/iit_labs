@@ -18,7 +18,7 @@ cin>>n;
 
 double a = 0, b = 120, h = (b-a)/n, f[n+1], x[n+1], sum;
 
-for (int i=0; i<=n+1; i++) {
+for (int i=1; i<=n; i++) {
     x[i-1] = a+(i-1)*h;
     f[i-1] = (pow(x[i-1],4))/((4*pow(x[i-1],5))+2);
     sum += f[i-1];
