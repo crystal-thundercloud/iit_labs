@@ -92,12 +92,83 @@ void swapTime(Time a, Time b) { //9 - обмен значениями време
 }
 
 int callTimes(int& times) { //10 - сколько раз вызвали функцию
-    //меняет значение только при указателе в аргументе
+    //меняет значение при указателе в аргументе
     return times++;
 }
 
+int callTimes2(int times) { //10 - сколько раз вызвали функцию
+    //меняет значение если присвоить её значение переменной, которая станет аргументом следующего вызова
+    return ++times;
+}
+
+struct sterling { //11 - стерлинги
+    int pounds, shillings, pence;
+};
+
+sterling getster(sterling st) { //11 - функция, записывающая сумму, введённую пользователем, в структуру sterling
+    char trash;
+    cin>>st.pounds>>trash>>st.shillings>>trash>>st.pence;
+    return st;
+}
+
+sterling sumster(sterling st1, sterling st2) { //11 - функция, суммирующая две суммы типа sterling
+    sterling sum;
+    sum.pence = st1.pence + st2.pence;
+    
+    while (sum.pence>=12&&sum.pence!=0) {
+        sum.pence-=12;
+        sum.shillings++;
+    }
+    sum.shillings += st1.shillings + st2.shillings;
+    
+    while (sum.shillings>=20&&sum.shillings!=0) {
+        sum.shillings-=20;
+        sum.pounds++;
+    }
+    
+    sum.pounds += st1.pounds+st2.pounds;
+    
+    return sum;
+}
+
+void returnster(sterling st) { //11 - функция, выводящая значение типа sterling
+    cout<<st.pounds<<"."<<st.shillings<<"."<<st.pence;
+}
+
+struct fraction { //12 структура - числитель и знаменатель дроби
+    int chis, znam;
+};
+
+fraction fadd(fraction fr1, fraction fr2) { //12 - сложение дробей
+    fraction plus;
+    plus.chis = (fr1.chis*fr2.znam)+(fr2.chis*fr1.znam);
+    plus.znam = fr1.znam*fr2.znam;
+    return plus;
+}
+
+fraction fsub(fraction fr1, fraction fr2) { //12 - вычитание дробей
+    fraction minus;
+    minus.chis = (fr1.chis*fr2.znam)-(fr2.chis*fr1.znam);
+    minus.znam = fr1.znam*fr2.znam;
+    return minus;
+}
+
+fraction fmul(fraction fr1, fraction fr2) { //12 - умножение дробей
+    fraction mnoj;
+    mnoj.chis = fr1.chis*fr2.chis;
+    mnoj.znam = fr1.znam*fr2.znam;
+    return mnoj;
+}
+
+fraction fdiv(fraction fr1, fraction fr2) { //12 - деление дробей
+    fraction del;
+    del.chis = fr1.chis*fr2.znam;
+    del.znam = fr2.chis*fr1.znam;
+    return del;
+}
+
 int main()
-{/*
+{
 cout<<R"(1. Напишите функцию с именем circarea(), которая вычисляет площадь круга.
 Функция   должна принимать один аргумент типа float и возвращать значение типа float.
 Напишите функцию main(), которая просит пользователя ввести значение радиуса,
@@ -219,10 +290,18 @@ cout<<"\n"<<R"(10. Напишите функцию, которая при каж
 и статической локальной переменной для хранения числа вызовов функции. Какой из способов предпочтительней?
 Почему для решения задачи нельзя использовать обычную локальную переменную?)"<<endl;
 
+cout<<"Вызов функции с указателем в аргументе: "<<endl;
 int times = 0;
 for (int i=0; i<10; i++) {
     cout<<"Функция была вызвана "<<callTimes(times)<<" раз(а)"<<endl;
-}*/
+}
+
+cout<<"Вызов функции с присваиванием её значения переменной и вызовом этой переменной в качестве аргумента: "<<endl;
+times = -1;
+for (int i=0; i<10; i++) {
+    cout<<"Функция была вызвана "<<callTimes2(times)<<" раз(а)"<<endl;
+    times = callTimes2(times);
+}
 
 cout<<"\n"<<R"(11. Напишите программу, использующую структуру sterling, которая описана в упражнении 10 лабораторной работы 2 «Структуры».
 Программа должна получать от пользователя значения двух денежных сумм, выраженных в фунтах, шиллингах и пенсах,
@@ -231,8 +310,51 @@ cout<<"\n"<<R"(11. Напишите программу, использующую
 Вторая функция должна принимать в качестве аргументов два значения типа sterling, складывать их и возвращать значение, также имеющее тип sterling.
 Третья функция должна принимать аргумент типа sterling и выводить его значение на экран.)"<<endl;
 
+sterling st1, st2, stsum;
+
+cout<<"Введите первую сумму (например, 10.5.11): £";
+st1 = getster(st1);
+cout<<"Введите вторую сумму: £";
+st2 = getster(st2);
+
+stsum = sumster(st1, st2);
+cout<<"Сумма = £";
+returnster(stsum);
 
 
+cout<<"\n"<<R"(12. Модифицируйте калькулятор, созданный в упражнении 12 лабораторной работы 2 «Структуры», так,
+чтобы каждая арифметическая операция выполнялась с помощью функции. Функции могут называться fadd(), fsub(), fmul() и fdiv().
+Каждая из функций должна принимать два структурных аргумента типа fraction и возвращать значение того же типа.)"<<endl;
+
+char oper, povtor;
+fraction fr1, fr2, plus, minus, mnoj, del;
+
+do {
+    cout<<"Введите выражение из двух операндов-дробей (например, 1/2-3/4): ";
+    cin>>fr1.chis>>trash>>fr1.znam>>oper>>fr2.chis>>trash>>fr2.znam;
+    switch (oper) {
+        case '+':
+            plus = fadd(fr1, fr2);
+            cout<<fr1.chis<<trash<<fr1.znam<<" + "<<fr2.chis<<trash<<fr2.znam<<" = "<<plus.chis<<trash<<plus.znam<<endl;
+            break;
+        case '-':
+            minus = fsub(fr1, fr2);
+            cout<<fr1.chis<<trash<<fr1.znam<<" - "<<fr2.chis<<trash<<fr2.znam<<" = "<<minus.chis<<trash<<minus.znam<<endl;
+            break;
+        case '*':
+            mnoj = fmul(fr1, fr2);
+            cout<<fr1.chis<<trash<<fr1.znam<<" * "<<fr2.chis<<trash<<fr2.znam<<" = "<<mnoj.chis<<trash<<mnoj.znam<<endl;
+            break;
+        case '/':
+            del = fdiv(fr1, fr2);
+            cout<<fr1.chis<<trash<<fr1.znam<<" / "<<fr2.chis<<trash<<fr2.znam<<" = "<<del.chis<<trash<<del.znam<<endl;
+            break;
+    }
+    cout<<"Ввести новое выражение? y,n: ";
+    cin>>povtor;
+}
+
+while (povtor=='y');
 
 return 0;
 }
