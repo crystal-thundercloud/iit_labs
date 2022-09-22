@@ -4,19 +4,18 @@ using namespace std;
 class stack {
 private:
 	int* st;
-	//int* head;
 	int size;
 	int headnum;
 public:
 	stack(int sz=1) {
 		st = new int[sz];
-		//head = &st[0];
 		headnum = 0;
 		size = sz;
 	}
 
 	bool push(int el) {
 		if (headnum < size) {
+			if (headnum == -1) headnum++;
 			st[headnum] = el;
 			headnum++;
 			return true;
@@ -27,13 +26,14 @@ public:
 	int pop() {
 		if (headnum > 0) {
 			int el = st[headnum-1];
-			st[headnum-1] = 0;
+			st[headnum-1] = 10;
 			headnum--;
 			return el;
 		}
 		else return 5329987;
 	}
 };
+
 
 /*
     Стек 
@@ -51,52 +51,59 @@ public:
 */
 
 int main() {
-	//setlocale(LC_ALL, "Russian");
-	int n, l, k;
-	bool bl;
-
-	do {
-		cout << "Vvedite razmer stecka (>0): ";
-		cin >> n;
-	} while (n < 0);
-
-	do {
-		cout << "Vvedite kolichestvo popytok zapolnit ili ochistit steck (>0): ";
-		cin >> l;
-	} while (l < 0);
-
-	stack st(n);
-
-	cout << "Zapolnite steck elementami" << endl;
-	for (int i = 0; i < l; i++) {
-		cout << "element ";
-		cin >> n;
-		bl = st.push(n);
-		if (bl) cout << "yspeshno dobavlen"<<endl;
-		else cout << "ne dobavlen: steck perepolnen"<<endl;
-	}
-
-	cout << "\nOchistka stecka:" << endl;
-	for (int i = 0; i < l; i++) {
-		k = st.pop();
-		if (k!= 5329987) cout << "element " << k << " ydalen" << endl;
-		else cout << "dostignyt konec steka" << endl;
-	}
-
-	cout << "\nZapolnenie posle ochistki (/2):" << endl;
-	for (int i = 0; i < l/2; i++) {
-		int r = rand();
-		bl = st.push(r);
-		if (bl) cout << "element " << r << " yspeshno dobavlen" << endl;
-		else cout << "ne dobavlen: steck perepolnen" << endl;
-	}
-
-	cout << "\nYdalenie (/2):" << endl;
-	for (int i = 0; i < l / 2; i++) {
-		k = st.pop();
-		if (k != 5329987) cout << "element " << k << " ydalen" << endl;
-		else cout << "dostignyt konec steka" << endl;
-	}
+	setlocale(LC_ALL, "Russian");
+	int razmer, choice, booknum, pop;
 	
+	string book[] = { "энциклопедия животного мира", "кулинарная книга", "сборник стихотворений", "школьный фотоальбом", "хрестоматия", "пособие по рисованию", "самоучитель C++", "словарь синонимов", "справочник по астрономии", "научная фантастика" };
+
+	cout << "Вы давно не разбирали свою личную библиотеку и решили составить башню из книг, чтобы потом рассортировать их."
+		<< "\nВ башне книги лежат друг на друге, и, чтобы снять определённую книгу, нужно сначала снять все книги над ней." << endl << endl;
+
+	cout << "Сколько максимально книг вы планируете положить в башню? ";
+	cin >> razmer;
+
+	if (razmer <= 0) {
+		cout << "\nВы передумали перебирать книги. В конце концов, можно заняться этим завтра." << endl;
+		exit(0);
+	}
+
+	cout << "\nВы решили, что будете работать с башней максимум из " << razmer << " книг(и)." << endl;
+
+	stack st(razmer);
+
+	do {
+		cout << "\n\nВведите 0, чтобы добавить книгу в башню, 1, чтобы забрать книгу из башни, и 2, чтобы завершить работу: ";
+		cin >> choice;
+
+		if (choice == 0) {
+			cout << "\nВы решили положить книгу в башню."
+				<< "\nШрифт на многих обложках слишком мелкий, поэтому для удобства вы наклеили на книги номера от 0 до 9."
+				<< "\nВведите номер книги, которую хотите положить в башню: ";
+			cin >> booknum;
+			
+			while (booknum < 0 || booknum>9) {
+				cout << "\nВы пытаетесь найти книгу с номером " << booknum << ", но ничего не находите. "
+					<< "\nВ конце концов, вы решаете взять книгу с другим номером."
+					<< "\nВведите номер книги, которую хотите положить в башню: ";
+				cin >> booknum;
+			}
+
+			cout << "В ваших руках " << book[booknum] <<".";
+			if (st.push(booknum)) cout << "\nВы аккуратно кладёте книгу в башню." << endl;
+			else cout << "\nК сожалению, ваша башня уже слишком высокая, и вы откладываете книгу в сторону." << endl;
+		}
+
+		else if (choice == 1) {
+			cout << "\nВы решили взять книгу из башни.";
+			pop = st.pop();
+			if (pop!=5329987) cout << "\nСамая верхняя книга - " << book[pop] << ". Вы снимаете её с башни и откладываете в сторону." << endl;
+			else cout << "\nК сожалению (или к радости) вы уже разобрали всю башню и в ней не осталось книг." << endl;
+		}
+	}
+
+	while (choice != 2);
+
+	cout << "Вы решили, что достаточно потрудились на сегодня, и отправились отдыхать." << endl;
+
     return 0;
 }
