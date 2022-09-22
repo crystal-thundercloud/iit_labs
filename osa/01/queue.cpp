@@ -20,11 +20,9 @@ public:
 	bool push(int el) {
 		tailnum %= size;
 		if (count<size) {
-			cout << "push count before: " << count << endl;
 			st[tailnum] = el;
 			tailnum++;
 			count++;
-			cout << "push count after: " << count << endl;
 			return true;
 		}
 		else return false;
@@ -33,12 +31,10 @@ public:
 	int pop() {
 		headnum %= size;
 		if (count>0) {
-			cout << "pop count before: " << count << endl;
 			int el = st[headnum];
 			st[headnum] = 10;
 			headnum++;
 			count--;
-			cout << "pop count after: " << count << endl;
 			return el;
 		}
 		else return 5329987;
