@@ -3,151 +3,119 @@ using namespace std;
 
 class queue {
 private:
-	int* qu;
+	int* st;
 	int size;
 	int headnum;
 	int tailnum;
-	bool fullqu;
+	int count;
 public:
 	queue(int sz = 1) {
-		qu = new int[sz];
+		st = new int[sz];
 		headnum = 0;
 		tailnum = 0;
+		count = 0;
 		size = sz;
-		fullqu = false;
 	}
 
 	bool push(int el) {
-		if (fullqu == false) {
-			if (headnum >= 0 && headnum <= tailnum) {
-				if (tailnum < size) {
-					qu[tailnum] = el;
-					tailnum++;
-					return true;
-				}
-				else if (headnum == 0) {
-					fullqu = true;
-					return false;
-				}
-
-				else {
-					tailnum = 0;
-				}
-			}
-
-			else if (headnum > 0 && headnum >= tailnum) {
-				if (tailnum < headnum) {
-					qu[tailnum] = el;
-					tailnum++;
-					return true;
-				}
-
-				else {
-					fullqu = true;
-					return false;
-				}
-			}
+		tailnum %= size;
+		if (count<size) {
+			cout << "push count before: " << count << endl;
+			st[tailnum] = el;
+			tailnum++;
+			count++;
+			cout << "push count after: " << count << endl;
+			return true;
 		}
-
 		else return false;
-		
 	}
 
 	int pop() {
-		if (headnum >= 0 && headnum <= tailnum) {
-			if (headnum < tailnum) {
-				int el = qu[headnum];
-				qu[headnum] = 0;
-				headnum++;
-				return el;
-			}
-
-			else {
-				fullqu = false;
-				return 5329987;
-			}
+		headnum %= size;
+		if (count>0) {
+			cout << "pop count before: " << count << endl;
+			int el = st[headnum];
+			st[headnum] = 10;
+			headnum++;
+			count--;
+			cout << "pop count after: " << count << endl;
+			return el;
 		}
-
-		else if (headnum > 0 && headnum >= tailnum) {
-			if (headnum < size) {
-				int el = qu[headnum];
-				qu[headnum] = 0;
-				headnum++;
-				return el;
-			}
-
-			else if (tailnum > 0) headnum = 0;
-
-			else {
-				fullqu = false;
-				return 5329987;
-			}
-		}
-
 		else return 5329987;
 	}
 };
+
+
 /*
-    Очередь.
+	Очередь
 
-    Необходимо разработать программу, реализующую работу с очередью.
+	Необходимо разработать программу, реализующую работу с очередью.
 
-    Программа должна содержать функции:
+	Программа должна содержать функции:
         вставки
         извлечения
 
-    Необходимо предусмотреть: 
+    Необходимо предусмотреть:
         контроль на переполнение
         контроль на отсутствие элементов
         отображение на экране значения извлекаемого элемента
 */
 
 int main() {
-	int n, l, k;
-	bool bl;
+	setlocale(LC_ALL, "Russian");
+	int razmer, choice, booknum, pop;
+	
+	string book[] = { "энциклопедия животного мира", "кулинарная книга", "сборник стихотворений", "школьный фотоальбом", "хрестоматия", "пособие по рисованию", "самоучитель C++", "словарь синонимов", "справочник по астрономии", "научная фантастика" };
+
+	cout << "Вы давно не разбирали свою личную библиотеку и решили рассортировать книги на круглой полке после их успешной сборки в башни."
+		<< "\nНа полку книги кладутся по часовой стрелке. Для удобства на первой книге всегда отметка, которая передвигается по часовой стрелке к следующей книги, если текущую книгу с отметкой сняли." 
+		<< "\nВы всегда снимаете только отмеченную книгу, чтобы не потерять начало." << endl << endl;
+
+	cout << "Сколько максимально книг вы планируете поставить на полку? ";
+	cin >> razmer;
+
+	if (razmer <= 0) {
+		cout << "\nВы передумали сортировать книги. В конце концов, можно заняться этим завтра." << endl;
+		exit(0);
+	}
+
+	cout << "\nВы решили, что будете работать с полкой максимум из " << razmer << " книг(и)." << endl;
+
+	queue st(razmer);
 
 	do {
-		cout << "Vvedite razmer ocheredi (>0): ";
-		cin >> n;
-	} while (n < 0);
+		cout << "\n\nВведите 0, чтобы добавить книгу на полку, 1, чтобы забрать книгу с полки, и 2, чтобы завершить работу: ";
+		cin >> choice;
 
-	do {
-		cout << "Vvedite kolichestvo popytok zapolnit ili ochistit ochered (>0): ";
-		cin >> l;
-	} while (l < 0);
+		if (choice == 0) {
+			cout << "\nВы решили поставить книгу на полку."
+				<< "\nШрифт на многих обложках слишком мелкий, поэтому для удобства вы наклеили на книги номера от 0 до 9."
+				<< "\nВведите номер книги, которую хотите поставть на полку: ";
+			cin >> booknum;
 
-	queue qu(n);
+			while (booknum < 0 || booknum>9) {
+				cout << "\nВы пытаетесь найти книгу с номером " << booknum << ", но ничего не находите. "
+					<< "\nВ конце концов, вы решаете взять книгу с другим номером."
+					<< "\nВведите номер книги, которую хотите поставть на полку: ";
+				cin >> booknum;
+			}
 
-	cout << "Zapolnite ochered elementami" << endl;
-	for (int i = 0; i < l; i++) {
-		cout << "element ";
-		cin >> n;
-		bl = qu.push(n);
-		if (bl) cout << "yspeshno dobavlen" << endl;
-		else cout << "ne dobavlen: ochered perepolnena" << endl;
+			cout << "В ваших руках " << book[booknum] << ".";
+			if (st.push(booknum)) cout << "\nВы аккуратно ставите книгу на полку." << endl;
+			else cout << "\nК сожалению, лимит книг на полке уже достигнут, и вы откладываете книгу в сторону." << endl;
+		}
+
+		else if (choice == 1) {
+			cout << "\nВы решили взять книгу с полки.";
+			pop = st.pop();
+			if (pop != 5329987) cout << "\nСамая первая книга - " << book[pop] << ". Вы снимаете её с полки и откладываете в сторону." << endl;
+			else cout << "\nК сожалению (или к радости) вы уже разобрали всю полку и на ней не осталось книг." << endl;
+		}
 	}
 
-	cout << "\nOchistka ocheredi:" << endl;
-	for (int i = 0; i < l; i++) {
-		k = qu.pop();
-		if (k != 5329987) cout << "element " << k << " ydalen" << endl;
-		else cout << "ochered pysta" << endl;
-	}
+	while (choice != 2);
 
-	cout << "\nZapolnenie posle ochistki (/2):" << endl;
-	for (int i = 0; i < l / 2; i++) {
-		int r = rand();
-		bl = qu.push(r);
-		if (bl) cout << "element " << r << " yspeshno dobavlen" << endl;
-		else cout << "ne dobavlen: ochered perepolnena" << endl;
-	}
+	cout << "Вы решили, что достаточно потрудились на сегодня, и отправились отдыхать." << endl;
 
-	cout << "\nOchistka ocheredi:" << endl;
-	for (int i = 0; i < l; i++) {
-		k = qu.pop();
-		if (k != 5329987) cout << "element " << k << " ydalen" << endl;
-		else cout << "ochered pysta" << endl;
-	}
-
-    return 0;
+	return 0;
 }
