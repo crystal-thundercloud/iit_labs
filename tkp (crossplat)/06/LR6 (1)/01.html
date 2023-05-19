@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>ЛР6 Задание 1</title>
+
+        <meta charset="utf-8"> <!-- для корректного вывода русского языка -->
+    </head>
+    <body>
+        <canvas id="stackCanvas" width="500" height="500"></canvas>
+        <input type="text" id="stackInput" placeholder="Введите значение">
+        <button id="pushButton">Добавить</button>
+        <input type="number" id="limitInput" placeholder="Максимальное количество элементов">
+        <button id="newButton">Обновить</button>
+        <button id="popButton">Удалить</button>
+        
+
+        <script type="text/javascript">
+            /*
+                Для объектно-ориентированной программной модели стека разработать пользовательский графический интерфейс.‾‾‾
+            */
+
+            // Получаем элементы со страницы
+            const canvas = document.getElementById('stackCanvas');
+            const input = document.getElementById('stackInput');
+            const limitInput = document.getElementById('limitInput');
+            const pushBtn = document.getElementById('pushButton');
+            const popBtn = document.getElementById('popButton');
+
+            // Получаем контекст холста
+            const ctx = canvas.getContext('2d');
+
+            // Создаем стек на основе массива
+            const stack = [];
+
+            // Максимальное количество элементов в стеке
+            let stackLimit = 5;
+            
+            //Коробка для отображения стека
+            let boxSize = 50;
+
+            // Функция отрисовки стека на холсте
+            function drawStack() {
+                // Очищаем холст
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                //Выдааем ему новый размер
+                canvas.width = stackLimit * boxSize;
+                canvas.height = boxSize;
+
+                // Рисуем элементы стека и коробку
+                ctx.fillStyle = 'blue';
+                ctx.font = '20px Arial';
+                ctx.textAlign = "center";
+                for (let i = 0; i < stack.length; i++) {
+                    ctx.strokeRect(i * boxSize, 0, boxSize, boxSize);
+                    ctx.fillText(stack[i], i * boxSize + boxSize / 2, boxSize / 2 + 8);
+                }
+                for (let i = stack.length; i < stackLimit; i++) {
+                    ctx.strokeRect(i * boxSize, 0, boxSize, boxSize);
+                }
+            }
+
+            // Функция добавления элемента в стек
+            function pushItem() {
+                // Получаем значение из текстового поля
+                const value = input.value;
+
+                // Если значение не пустое, добавляем его в стек
+                if (value !== '') {
+                    // Если стек заполнен, предупреждаем пользователя
+                    if (stack.length === stackLimit) {
+                        alert("Стек полон");
+                    } 
+                    else {// Иначе, добавляем элемент
+                        stack.push(item);
+                        drawStack();
+                    }
+                }
+                else {
+                    alert("Введите элемент");
+                }
+
+                input.value = "";
+            }
+
+            // Функция удаления верхнего элемента из стека
+            function popItem() {
+                // Если стек пустой, предупреждаем пользователя
+                if (stack.length === 0) {
+                    alert("Стек пуст");
+                }
+                // Иначе, удаляем верхний элемент
+                else {
+                    stack.pop();
+                    drawStack();
+                }
+            }
+
+            // Функция обработки изменения максимального количества элементов в стеке
+            function setLimit() {
+                stackLimit = parseInt(limitInput.value);
+              
+                // Если новое значение не является числом или меньше 1, то устанавливаем максимальное количество элементов равным 9
+                if (isNaN(stackLimit) || stackLimit < 1) {
+                    stackLimit = 9;
+                    limitInput.value = 9;
+                    alert('Максимальное количество элементов должно быть числом больше 0!');
+                }
+              
+                // Если стек уже содержит больше элементов, чем новое максимальное значение, то удаляем лишние элементы
+                while (stack.length > stackLimit) {
+                    stack.pop();
+                }
+              
+                // Отрисовываем стек на холсте
+                drawStack();
+            }
+
+            // Обработчик клика на кнопке "Добавить"
+            pushButton.onclick = function() {
+                const item = document.getElementById('stackInput').value;
+            
+                // Если стек уже содержит максимальное количество элементов, то выводим сообщение об ошибке
+                if (stack.length >= stackLimit) {
+                    alert('Стек переполнен!');
+                    return;
+                }
+            
+                // Добавляем новый элемент в стек
+                stack.push(item);
+            
+                // Отрисовываем стек на холсте
+                drawStack();
+            };
+            
+            // Обработчик клика на кнопке "Удалить"
+            popButton.onclick = function() {
+                // Если стек пуст, то выводим сообщение об ошибке
+                if (stack.length === 0) {
+                    alert('Стек пуст!');
+                    return;
+                }
+            
+                // Удаляем верхний элемент из стека
+                stack.pop();
+            
+                // Отрисовываем стек на холсте
+                drawStack();
+            };
+
+            //
+            newButton.onclick = function() {
+                setLimit();
+            }
+
+            // Инициализируем стек и отрисовываем его на холсте
+            drawStack();
+
+        </script>
+    </body>
+</html>

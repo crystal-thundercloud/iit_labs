@@ -1,0 +1,244 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>ЛР6 Задание 3</title>
+
+        <meta charset="utf-8"> <!-- для корректного вывода русского языка -->
+    </head>
+    <body>
+        <canvas id="canvas" width="500" height="500"></canvas>
+        <br>
+        <input type="text" id="listInput" placeholder="Добавить элемент">
+        <button id="pushButton">Добавить в конец</button>
+        <button id="unshiftButton">Добавить в начало</button>
+        <button id="shiftButton">Удалить начало</button>
+        <button id="popButton">Удалить конец</button>
+        <input type="text" id="listFind" placeholder="Найти элемент">
+        <button id="findButton">Найти элемент</button>
+        <button id="findDelButton">Найти элемент и удалить его</button>
+        <button id="findNewButton">Найти элемент и добавить после него</button>
+
+        <script type="text/javascript">
+            /*
+                Создать программную модель двусвязного списка, используя объектно-ориентированный подход
+            */
+
+            let canvas = document.getElementById("canvas");
+            let ctx = canvas.getContext("2d");
+
+            var list = {
+                size: 0,
+                start: null,
+                end: null,
+
+                NewNodeEnd(into){
+                    if (!this.start){
+                        this.start = {
+                            value: into,
+                            prev: null,
+                            next: null
+                        }
+                        this.size++;
+                        this.end = this.start;
+                    }
+                    else{
+                        this.end.next = {
+                            value: into,
+                            prev: this.end,
+                            next: null
+                        }
+                        this.size++;
+                        this.end = this.end.next;
+                    }
+                    return 1;
+                },
+
+                NewNodeStart(into){
+                    if (!this.start){
+                        this.start = {
+                            value: into,
+                            prev: null,
+                            next: null
+                        }
+                        this.size++;
+                        this.end = this.start;
+                    }
+                    else{
+                        this.start.prev = {
+                            value: into,
+                            prev: null,
+                            next: this.start
+                        }
+                        this.size++;
+                        this.start = this.start.prev;
+                    }
+                    return 1;
+                },
+
+                DeleteStart(){
+                    if (!this.start) return null;
+                    if (this.end === this.start){
+                        this.end = null;
+                        this.start = null;
+                        this.size--;
+                        return 1;
+                    }
+                    this.start = this.start.next;
+                    if(!this.start) this.start.prev = null;
+                    this.size--;
+                    return 1;
+                },
+
+                DeleteEnd(){
+                    if (!this.start) return null;
+                    if (this.end === this.start){
+                        this.end = null;
+                        this.start = null;
+                        this.size--;
+                        return 1;
+                    }
+                    this.end = this.end.prev;
+                    this.end.next = null;
+                    this.size--;
+                    return 1;
+                },
+
+                Find(find){
+                    if(!this.start) return null;
+                    let current = this.start;
+                    do{
+                        if (current.value === find) return 1;
+                        else current = current.next;
+                    }while(current)
+                    return 0;
+                },
+
+                DeleteFind(find){
+                    if(!this.start) return null;
+                    let currentNode = this.start;
+                    while (currentNode.value !== find) {
+                        currentNode = currentNode.next;
+                        if (!currentNode) return 0;
+                    }
+                    if (currentNode === this.start) this.DeleteStart();
+                    if (currentNode === this.end) this.DeleteEnd();
+                    let prevNode = currentNode.prev;
+                    let nextNode = currentNode.next;
+                    currentNode = null;
+                    prevNode.next = nextNode;
+                    nextNode.prev = prevNode;
+                    this.size--;
+                    return 1;
+                },
+
+                NewNodeAfterFind(find, val){
+                    if(!this.start) return null;
+                    let currentNode = this.start;
+                    while (currentNode.value !== find) {
+                        currentNode = currentNode.next;
+                        if (!currentNode) return 0;
+                    }
+                    if (currentNode === this.end) this.NewNodeEnd(val);
+                    let nextNode = currentNode.next;
+                    currentNode.next = {
+                        value: val,
+                        prev: currentNode,
+                        next: nextNode
+                    }
+                    nextNode.prev = currentNode.next;
+                    this.size++;
+                    return 1;
+                }
+            };
+
+            function drawList() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                canvas.width = list.size * 80 + 100;
+                let node = list.start;
+                let x = 50;
+                let y = 100;
+                let radius = 25;
+                while (node) {
+                    ctx.beginPath();
+                    ctx.arc(x, y, radius, 0, Math.PI * 2);
+                    ctx.stroke();
+                    ctx.closePath();
+                    ctx.font = "20px Arial";
+                    ctx.fillText(node.value, x - 8, y + 7);
+                    x += 80;
+                    node = node.next;
+                }
+            }
+
+            popButton.onclick = function() {
+                // Удаляем элемент в конце списка
+                if (!list.DeleteEnd()) alert("Список пуст");
+
+                // Отрисовываем список на холсте
+                drawList();
+            };
+
+            shiftButton.onclick = function() {
+                // Удаляем элемент в начале списка
+                if (!list.DeleteStart()) alert("Список пуст");
+
+                // Отрисовываем список на холсте
+                drawList();
+            };
+
+            unshiftButton.onclick = function() {
+                // Добавляем элемент в начало списка
+                if (document.getElementById('listInput').value !== "") list.NewNodeStart(document.getElementById('listInput').value);
+
+                // Отрисовываем список на холсте
+                drawList();
+            };
+
+            pushButton.onclick = function() {
+                // Добавляем элемент в конец списка
+                if (document.getElementById('listInput').value !== "") list.NewNodeEnd(document.getElementById('listInput').value);
+
+                // Отрисовываем список на холсте
+                drawList();
+            };
+
+            findButton.onclick = function() {
+                // Ищем элемент в списке
+                if (document.getElementById('listFind').value !== "") {
+                    if (list.Find(document.getElementById('listFind').value)) alert("Элемент есть в списке");
+                    else alert("Элемента в списке нет");
+                }
+
+                // Отрисовываем список на холсте
+                drawList();
+            };
+
+            findDelButton.onclick = function() {
+                // Ищем элемент в списке и удаляем, если он есть
+                if (document.getElementById('listFind').value !== "") {
+                    if (list.DeleteFind(document.getElementById('listFind').value)) alert("Элемент удален");
+                    else alert("Элемента в списке нет");
+                }
+
+                // Отрисовываем список на холсте
+                drawList();
+            };
+
+            findNewButton.onclick = function() {
+                // Ищем элемент в списке и добавляем после него, если он есть
+                if (document.getElementById('listFind').value !== "" && document.getElementById('listInput').value !== "")  {
+                    if (list.NewNodeAfterFind(document.getElementById('listFind').value, document.getElementById('listInput').value)) alert("Элемент добавлен");
+                    else alert("Элемента в списке нет");
+                }
+
+                // Отрисовываем список на холсте
+                drawList();
+            };
+
+            drawList();
+
+        </script>
+
+    </body>
+</html>

@@ -1,0 +1,16 @@
+﻿<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Вывод на экран входящих параметров</title>
+    </head>
+    <body>
+        <?php
+            $message = $_POST['message'];
+            $name = $_POST['name'];
+            $bg = $_POST['bg'];
+            echo "<div style='background-color:$bg; width:100%; height: 100%'>";
+            echo $message.", ".$name;
+            echo "</div>";
+        ?>
+    </body>
+</html>

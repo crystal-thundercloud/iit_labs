@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+<body>
+
+<canvas id="canvas" width="400" height="400"
+style="background-color:#fff">
+</canvas>
+
+<script>
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+var radius = canvas.height / 2;
+ctx.translate(radius, radius);
+radius = radius * 0.90
+drawClock();
+
+function drawClock() {
+  drawNumbers(ctx, radius);
+}
+
+
+function drawNumbers(ctx, radius) {
+  var ang;
+  var num;
+  
+  var height = 20;
+  var count = 20;
+  
+  radius = height * count / 2;
+  ctx.font = height + "px arial";
+  
+  for(num = 1; num < count + 1; num++){
+    ang = num * Math.PI / count * 2;
+    ctx.rotate(ang);
+    ctx.translate(0, -radius*0.85);
+    ctx.rotate(-ang);
+
+    ctx.strokeRect(0, 0, num.toString().length * 15, height);
+
+    ctx.fillStyle = "black";
+    ctx.fillText(num.toString(), num.toString().length, height - height/10);
+    
+    ctx.rotate(ang);
+    ctx.translate(0, radius*0.85);
+    ctx.rotate(-ang);
+  }
+}
+</script>
+
+</body>
+</html>

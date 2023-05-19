@@ -1,0 +1,450 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>ЛР6 Задание 3</title>
+
+        <meta charset="utf-8"> <!-- для корректного вывода русского языка -->
+
+        <style>
+            p#err {
+                color: red
+            }
+            p#log {
+                max-height: 500px;
+                overflow-y: scroll;
+                border: 2px dashed black;
+                padding: 5px;
+            }
+
+            .root {
+                background-color: cadetblue;
+            }
+
+            .top {
+                background-color: coral;
+            }
+
+            .found {
+                background-color: orchid;
+                visibility: hidden;
+            }
+
+        </style>
+    </head>
+
+    <body>
+        <form id="frm1" autocomplete="off">
+            <fieldset>
+                <legend>Вставка</legend>
+                <input type="text" id="el" placeholder="Данные для вставки" maxlength="20" autofocus>
+                <input type="button" id="pushFound" class="found" value="Вставить после найденного элемента">
+                <br>
+                <input type="submit" id="pushRoot" class="root" value="Вставить в начало списка">
+                <input type="button" id="pushTop" class="top" value="Вставить в конец списка">
+            </fieldset>
+        </form>
+        <br>
+        <form>
+            <fieldset>
+                <legend>Удаление</legend>
+                <input type="button" id="popRoot" class="root" value="Удалить головной элемент">
+                <input type="button" id="popTop" class="top" value="Удалить хвостовой элемент">
+            </fieldset>
+        </form>
+        <br>
+        <form id="frm2" autocomplete="off">
+            <fieldset>
+                <legend>Поиск</legend>
+                <input type="text" id="elFind" placeholder="Данные для поиска" maxlength="20" title="Индекс должен быть целым числом >= 0">
+                <input type="submit" id="find" value="Найти">
+                <br>
+                <label><input type="radio" name="findType" id="findItem" value="item">Поиск по значению</label>
+                <label><input type="radio" name="findType" id="findIndex" value="index">Поиск по индексу</label>
+                <br>
+                <input type="button" id="popFound" class="found" value="Удалить найденный элемент">
+            </fieldset>
+        </form>
+        <br>
+
+        <canvas id="canv" width="800px"></canvas>
+
+        <br>
+
+        <p id="err">
+        <p id="info">Перед вами модель двусвязного списка. Корневой (начальный) элемент отмечен сине-зелёным цветом, верхний (конечный) - оранжевым, а найденный в поиске - розовым.
+        <p id="log">
+        </p>
+
+        <script type="text/javascript">
+            /*
+            Для объектно-ориентированной программной модели двусвязного списка разработать пользовательский
+            графический интерфейс.
+            */
+
+            var canvas = document.getElementById("canv");
+            var ctx = canvas.getContext('2d');
+
+            var el = document.getElementById("el");
+            var btnPushTop = document.getElementById("pushTop");
+            var btnPushRoot = document.getElementById("pushRoot");
+            var btnPopTop = document.getElementById("popTop");
+            var btnPopRoot = document.getElementById("popRoot");
+
+            var elFind = document.getElementById("elFind");
+            var btnFind = document.getElementById("find");
+            var btnPushFound = document.getElementById("pushFound");
+            var btnPopFound = document.getElementById("popFound");
+
+            var radItem = document.getElementById("findItem");
+            var radIndex = document.getElementById("findIndex");
+
+            var err = document.getElementById("err");
+            var info = document.getElementById("info");
+            var log = document.getElementById("log"); 
+
+            var frm1 = document.getElementById("frm1");
+            var frm2 = document.getElementById("frm2");
+
+            frm1.addEventListener("submit", function(e){
+                e.preventDefault();
+            })
+            
+            frm2.addEventListener("submit", function(e){
+                e.preventDefault();
+            })
+
+            btnPushTop.addEventListener("click", pushTop);
+            btnPushRoot.addEventListener("click", pushRoot);
+
+            btnPopTop.addEventListener("click", popTop);
+            btnPopRoot.addEventListener("click", popRoot);
+
+            btnFind.addEventListener("click", findNode);
+
+            radItem.checked = true;
+
+            radItem.addEventListener("click", function() {
+                if (!radItem.checked) elFind.pattern = "[0-9]*";
+                else elFind.pattern = "*";
+            })
+
+            radIndex.addEventListener("click", function() {
+                if (radIndex.checked) elFind.pattern = "[0-9]*";
+                else elFind.pattern = "*";
+            })
+
+            btnPushFound.addEventListener("click", addAfterFound);
+            btnPopFound.addEventListener("click", removeFound);
+
+            function reloadInfo() {
+                info.innerHTML = "Текущая длина списка: " + List.nodeCount;
+            }
+
+            function pushTop(item) {
+                item = el.value;
+                if (item == "") err.innerHTML = "Элемент для вставки должен быть непустым";
+                else {
+                    err.innerHTML = "";
+                    el.value = "";
+                    let p = List.addTopNode(item);
+                    log.innerHTML += p;
+                    updLog();
+                    drawList();
+                    reloadInfo();
+                }
+            }
+
+            function pushRoot(item) {
+                item = el.value;
+                if (item == "") err.innerHTML = "Элемент для вставки должен быть непустым";
+                else {
+                    err.innerHTML = "";
+                    el.value = "";
+                    let p = List.addRootNode(item);
+                    log.innerHTML += p;
+                    updLog();
+                    drawList();
+                    reloadInfo();
+                }
+            }
+
+            function popRoot() {
+                let p = List.removeRootNode();
+                if (p == "Список пуст") err.innerHTML = p;
+                else {
+                    err.innerHTML = "";
+                    log.innerHTML += p;
+                    updLog();
+                    drawList();
+                    reloadInfo();
+                }
+            }
+
+            function popTop() {
+                let p = List.removeTopNode();
+                if (p == "Список пуст") err.innerHTML = p;
+                else {
+                    err.innerHTML = "";
+                    log.innerHTML += p;
+                    updLog();
+                    drawList();
+                    reloadInfo();
+                }
+            }
+
+            var foundInfo = "";
+
+            function findNode(item) {
+                item = elFind.value;
+                if (item == "") err.innerHTML = "Элемент для поиска должен быть непустым";
+                else if (radIndex.checked && (!elFind.checkValidity() || (elFind.checkValidity() && item < 0))) err.innerHTML = "Индекс для поиска должен быть числом >= 0";
+                else {
+                    foundInfo = (radItem.checked)? List.findNode(item) : List.findNode("", item);
+                    if (typeof(foundInfo) === "string") err.innerHTML = foundInfo;
+                    else {
+                        log.innerHTML += foundInfo.text;
+                        info.innerHTML = foundInfo.text;
+                        err.innerHTML = "";
+                        btnPushFound.style.visibility = btnPopFound.style.visibility = "visible";
+                        updLog();
+                        drawList();
+                    }
+                }
+            }
+
+            function removeFound(item) {
+                if (foundInfo == "") err.innerHTML = "Поиск не был произведён";
+                else {
+                    item = foundInfo.item;
+                    let p = List.removeFoundNode(item);
+                    foundInfo = err.innerHTML = elFind.value = info.innerHTML = "";
+                    btnPushFound.style.visibility = btnPopFound.style.visibility = "hidden";
+                    log.innerHTML += p + "<br>Результаты поиска очищены";
+                    updLog();
+                    drawList();
+                    reloadInfo();
+                }
+            }
+
+            function addAfterFound(foundVal, newVal) {
+                foundVal = foundInfo.item;
+                newVal = el.value;
+                if (el.value == "") err.innerHTML = "Элемент для вставки должен быть непустым";
+                else {
+                    let p = List.addAfterFoundNode(foundVal, newVal);
+                    err.innerHTML = "";
+                    el.value = "";
+                    log.innerHTML += p;
+                    drawList();
+                    updLog();
+                }
+            }
+
+            function updLog() {
+                log.innerHTML += "<br><br>";
+                log.scrollTo(0, log.scrollHeight);
+            }
+
+            function drawList() {
+                let font = 20;
+                let height = font + 4;
+                canvas.width += List.getLength() * font/2;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                ctx.font = font+'px Arial';
+                ctx.textAlign = "center";
+
+                let length = 0;
+
+                for (let i = 1; i < List.nodeCount + 1; i++) {
+                    if (foundInfo != "" && foundInfo.index == i-1) ctx.fillStyle = "orchid";
+                    else if (i == 1) ctx.fillStyle = "cadetblue";
+                    else if (i == List.nodeCount) ctx.fillStyle = "coral";
+                    else ctx.fillStyle = "white";
+
+                    let data = List.findNode("", i-1).item.toString();
+
+                    ctx.fillRect(length, 50, data.length * height, height);
+                    ctx.strokeRect(length, 50, data.length * height, height);
+
+                    ctx.fillStyle = "black";
+                    ctx.fillText(data, length + data.length * height/2, 50 + height - 4);
+                    if (i != List.nodeCount) ctx.fillText("<=>", length + data.length * height + font, 50 + height - 4);
+                    length += data.length * height + 40;
+                }
+            }
+
+            class Node {
+                constructor(value) {
+                    this.value = value;
+                    this.prev = null;
+                    this.next = null;
+                }
+            }
+
+            var List = {
+                top: null,
+                root: null,
+                nodeCount: 0,
+
+                addTopNode(value) {
+                    let nd = new Node(value);
+
+                    if (this.nodeCount == 0) {
+                        this.root = nd;
+                        this.top = nd;
+                        this.nodeCount++;
+                        return "Элемент " + value + " добавлен в качестве первого элемента";
+                    }
+                    else {
+                        this.top.next = nd;
+                        nd.prev = this.top;
+                        this.top = nd;
+                        this.nodeCount++;
+                        return "Элемент " + value + " добавлен в конец";
+                    }
+                },
+
+                addRootNode(value) {
+                    let nd = new Node(value);
+
+                    if (this.nodeCount == 0) {
+                        this.root = nd;
+                        this.top = nd;
+                        this.nodeCount++;
+                        return "Элемент " + value + " добавлен в качестве первого элемента";
+                    }
+                    else {
+                        nd.next = this.root;
+                        this.root.prev = nd;
+                        this.root = nd;
+                        this.nodeCount++;
+                        return "Элемент " + value + " добавлен в начало";
+                    }
+                },
+
+                removeTopNode() {
+                    if (this.top === null) return "Список пуст";
+                    else if (this.root == this.top) return this.removeRootNode();
+
+                    let nd = this.top.prev;
+                    let val = this.top.value;
+                    nd.next = null;
+                    delete this.top;
+                    this.top = nd;
+                    this.nodeCount--;
+
+                    if (this.nodeCount == 0) {
+                        this.top = null;
+                        this.root = null;
+                    }
+                    else if (this.nodeCount == 1) this.top = this.root;
+                    return "Конечный элемент " + val + " удалён";
+                },
+
+                removeRootNode() {
+                    if (this.root == null) return "Список пуст";
+
+                    let nd = this.root;
+                    let val = this.root.value;
+                    this.root = nd.next;
+                    nd.prev = null;
+                    delete nd;
+                    this.nodeCount--;
+
+                    if (this.nodeCount == 0) {
+                        this.top = null;
+                        this.root = null;
+                    }
+                    else if (this.nodeCount == 1) this.top = this.root;
+
+                    return "Начальный элемент " + val + " удалён";
+                },
+
+                findNode(value = "", index = -1) { // добавлен поиск по индексу
+                    if (this.nodeCount > 0) {
+                        if (index >= this.nodeCount) return "Заданный индекс >= числу элементов";
+                        let nd = this.root;
+                        for (let i = 0; i < this.nodeCount; i++) {
+                            if (index != -1 && i == index) return {
+                                text: "На позиции " + i + " найден элемент "  + nd.value,
+                                item: nd.value,
+                                index: i,
+                            };
+                            else if (index == -1 && nd.value == value) return {
+                                text: "Элемент " + nd.value + " найден на позиции " + i,
+                                item: nd.value,
+                                index: i,
+                            };
+                            nd = nd.next;
+                        }
+                        return "Элемент не найден";
+                    }
+                    return "Список пуст";
+                },
+                
+                removeFoundNode(foundvalue) {
+                    let foundnode = this.root;
+
+                    while (foundnode.value != foundvalue) foundnode = foundnode.next;
+
+                    if (this.root == foundnode) return this.removeRootNode();
+                    else if (this.top == foundnode) return this.removeTopNode();
+                    else {
+                        foundnode.prev.next = foundnode.next;
+                        foundnode.next.prev = foundnode.prev;
+                        
+                        delete foundnode;
+                        this.nodeCount--;
+                        return "Найденный элемент " + foundvalue + " удалён";
+                    }
+                },
+
+                addAfterFoundNode(foundvalue, newvalue) {
+                    let foundnode = this.root;
+                    let addnode = new Node(newvalue);
+
+                    while (foundnode.value != foundvalue) foundnode = foundnode.next;
+                    if (this.top == foundnode) return this.addTopNode(newvalue);
+
+                    addnode.next = foundnode.next;
+                    addnode.prev = foundnode;
+                    foundnode.next = addnode;
+
+                    this.nodeCount++;
+                    return "Элемент " + newvalue + " добавлен после элемента " + foundvalue;
+                },
+
+                // не использовалась
+                print() {
+                    let list = "";
+                    if (this.nodeCount > 0) {
+                        let nd = this.root;
+
+                        for (let i = 0; i < this.nodeCount; i++) {
+                            list += nd.value;
+                            if (nd.next != null) {
+                                list += ", ";
+                            }
+                            nd = nd.next;
+                        }
+                    }
+                    return list;
+                },
+
+                // новая функция для динамичной ширины canvas
+                getLength() {
+                    let length = 0;
+                    let nd = this.root;
+                    for (let i = 0; i < this.nodeCount; i++) {
+                        length += nd.value.toString().length;
+                        nd = nd.next;
+                    } 
+                    return length;
+                }
+            }
+            
+        </script>
+    </body>
+</html>

@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>ЛР6 Задание 1</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.12.17/paper-full.js" integrity="sha512-z1Ws0aVF+gkSR/9Wo1d82UX7tOb80rPIa55NOTpptJr+EbyhfszWvw5nKMPn0il7T2AsNPgNjlvadGAgL/HOrA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.js" integrity="sha512-Jv40bbkvmOAhsXlBVsMMSndM4kdsgQ8CHeJMIaIVmv22VjQmIa+ktIHlnOBH85XDyY1AqojnpnkGyl9+NCs+gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script type="text/javascript" src="my_javascript.js"></script>
+        <meta charset="utf-8"> <!-- для корректного вывода русского языка -->
+    </head>
+    <body>
+        <h3>Рисуем круги</h3>
+        <canvas id="myCanvas" width="600px" height="300px" style="border: 1px solid"> </canvas>
+        <br />
+        <input type="text" size=3 maxlength=3 id="x" placeholder="x" value="100"/>
+        <input type="text" size=3 maxlength=3 id="y" placeholder="y" value="100"/>
+        <input type="text" size=3 maxlength=3 id="r" placeholder="radius" value="10"/>
+        <input type="text" size=10 maxlength=10 id="bc" placeholder="back color" value="white"/>
+        <input type="text" size=10 maxlength=10 id="c" placeholder="around color" value="black"/>
+        <input type="text" size=3 maxlength=3 id="w" placeholder="stroke width" value="1"/>
+        <button id="draw">Нарисовать круг</button>
+        <button id="clean">Очистить холст</button>
+        <button id="generator">Сгенерировать</button>
+    </body>
+</html>

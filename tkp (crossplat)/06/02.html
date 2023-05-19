@@ -1,0 +1,208 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>ЛР6 Задание 2</title>
+
+        <meta charset="utf-8"> <!-- для корректного вывода русского языка -->
+
+        <style>
+            p#err {
+                color: red
+            }
+            p#log {
+                max-height: 500px;
+                overflow-y: scroll;
+                border: 2px dashed black;
+                padding: 5px;
+            }
+
+            #pop, #log {
+                visibility: hidden;
+            }
+        </style>
+    </head>
+
+    <body>
+        <form id="frm" autocomplete="off">
+            <input type="text" id="el" placeholder="Размер полки (очереди)" maxlength="2" pattern="[0-9]*">
+            <input type="submit" id="push" value="Применить">
+            <input type="button" id="pop" value="Снять отмеченную книгу с полки">
+        </form>
+
+        <br>
+
+        <canvas id="canv" width="800px"></canvas>
+
+        <br>
+
+        <p id="err">
+        <p id="info">Вы давно не разбирали свою личную библиотеку и решили рассортировать книги на круглой полке после их успешной сборки в башни.<br>
+            На полку книги кладутся по часовой стрелке. Для удобства на первой книге всегда отметка, которая передвигается по часовой стрелке к следующей книге, если текущую книгу с отметкой сняли.<br>
+            Вы всегда снимаете только отмеченную книгу, чтобы не потерять начало.<br>
+            Сколько максимально книг вы планируете поставить на полку?
+        <p id="log">
+        </p>
+
+        <script type="text/javascript">
+            /*
+            Для объектно-ориентированной программной модели циклической очереди разработать
+            пользовательский графический интерфейс.
+            */
+
+            var canvas = document.getElementById("canv");
+            var ctx = canvas.getContext('2d');
+
+            var el = document.getElementById("el");
+            var btnPush = document.getElementById("push");
+            var btnPop = document.getElementById("pop");
+
+            var err = document.getElementById("err");
+            var info = document.getElementById("info");
+            var log = document.getElementById("log"); 
+
+            // чтобы можно было отправлять на enter, но страница не обновлялась
+            var frm = document.getElementById("frm");
+            frm.addEventListener("submit", function(e){
+                e.preventDefault();
+            })
+
+            btnPush.addEventListener("click", sizeCheck);
+
+            function sizeCheck() {
+                if (el.value <= 0) err.innerHTML = "Размер полки делжен быть больше нуля";
+                else if (!el.checkValidity())  err.innerHTML = "Размер полки должент быть числом";
+                else {
+                    queue.maxsize = +el.value;
+                    err.innerHTML = "";
+
+                    btnPush.removeEventListener("click", sizeCheck);
+                    btnPush.addEventListener("click", push);
+                    btnPush.value = "Поставить на полку";
+
+                    el.value = "";
+                    el.placeholder = "Название книги";
+                    el.pattern = "*";
+                    el.maxLength = 20;
+                    
+                    btnPop.style.visibility = "visible";
+                    btnPop.addEventListener("click", shift);
+
+                    log.style.visibility = "visible";
+
+                    reloadInfo();
+                    drawQueue();
+                }
+            }
+
+            function reloadInfo() {
+                info.innerHTML = "Вы решили, что будете работать с полкой максимум из " + queue.maxsize + " книг(и)." + "<br>Текущий размер полки: " + queue.length + "<br>Для удобства первая книга (либоо место, на котором будет первая книга) отмечена зелёным цветом.";
+            }
+
+            function push(item) {
+                item = el.value;
+                if (item == "") err.innerHTML = "Введите название книги";
+                else {
+                    let p = queue.push(item);
+                    if (p) {
+                        log.innerHTML += "Вы решили поставить книгу на полку." + "<br>" + "Вы аккуратно ставите книгу с названием \"" + item + "\" на полку.";
+                        el.value = err.innerHTML = "";
+                        drawQueue();
+                    }
+                    else {
+                        log.innerHTML += "Вы решили поставить книгу на полку." + "<br>" + "К сожалению, лимит книг на полке уже достигнут, и вы откладываете книгу в сторону.";
+                        err.innerHTML = "Очередь переполнена";
+                    }
+                    updLog();
+                }
+            }
+
+            function shift() {
+                let p = queue.shift();
+                if (p != "Пусто") {
+                    log.innerHTML += "Вы решили забрать книгу с полки." + "<br>" + "Самая первая книга - \"" + p + "\"." + "<br>" + "Вы снимаете её с полки и откладываете в сторону.";
+                    err.innerHTML = "";
+                    drawQueue();
+                }
+                else {
+                    log.innerHTML += "Вы решили забрать книгу с полки." + "<br>" + "К сожалению (или к радости), вы уже разобрали всю полку и на ней не осталось книг.";
+                    err.innerHTML = "Очередь пуста";
+                }
+                updLog();
+            }
+
+            function updLog() {
+                log.innerHTML += "<br><br>";
+                log.scrollTo(0, log.scrollHeight);
+                reloadInfo();
+            }
+
+            function drawQueue() {
+                let font = 20;
+                let height = font + 4;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                canvas.height = queue.maxsize * height * 2;
+
+                ctx.font = font+'px Arial';
+                
+                var radius = canvas.height / 2 - height / 2;
+                var ang;
+
+                for (let i = 1; i < queue.maxsize + 1; i++) {
+                    ang = i * Math.PI / queue.maxsize * 2;
+
+                    ctx.rotate(ang);
+                    ctx.translate(0, -radius*0.85);
+                    ctx.rotate(-ang);
+
+                    if (i-1 == queue.head) ctx.fillStyle = "lime";
+                    else ctx.fillStyle = "white";
+
+                    ctx.fillRect(radius, radius, queue.data[i-1] == null? 10 : queue.data[i-1].toString().length * height/2, height);
+                    ctx.strokeRect(radius, radius, queue.data[i-1] == null? 10 : queue.data[i-1].toString().length * height/2, height);
+
+                    ctx.fillStyle = "black";
+                    if (queue.data[i-1] != null) ctx.fillText(queue.data[i-1],  radius + queue.data[i-1].toString().length/2, radius + height - 4);
+
+                    ctx.rotate(ang);
+                    ctx.translate(0, radius*0.85);
+                    ctx.rotate(-ang);
+                }
+            }
+
+            var queue = {
+                data: new Array,
+                head: 0,
+                tail: 0,
+                length: 0,
+                maxsize: 1,
+
+                shift() {
+                    this.head %= this.maxsize;
+                    if (this.length > 0) {
+                        let item = this.data[this.head];
+                        this.data[this.head] = null;
+                        this.head++;
+                        this.head %= this.maxsize;
+                        this.length--;
+                        return item;
+                    }
+                    return "Пусто";
+                },
+
+                push(item) {
+                    this.tail %= this.maxsize;
+                    if (this.length < this.maxsize) {
+                        this.data[this.tail] = item;
+                        this.tail++;
+                        this.tail %= this.maxsize;
+                        this.length++;
+                        return true;
+                    }
+                    return false;
+                }
+            }
+        </script>
+    </body>
+</html>

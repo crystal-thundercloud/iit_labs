@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>ЛР4 Задание 1</title>
+
+        <meta charset="utf-8"> <!-- для корректного вывода русского языка -->
+
+        <script type="text/javascript">
+            /*
+            Создать функции двух аргументов:
+            сложения,
+            вычитания,
+            умножения,
+            деления.
+            В каждой функции предусмотреть вывод результата в окне браузера в формате:
+            a + b = 8
+            a - b = 3
+            a * b = 16
+            a / b = 2
+            Попытка деления на 0.
+            */
+
+            function sum(a, b) {
+                alert("a + b = " + (a+b));
+            }
+
+            function dif(a, b){
+                alert("a - b = " + (a-b));
+            }
+
+            function mult(a, b){
+                alert("a * b = " + (a*b));
+            }
+
+            function div(a, b) {
+                if (b == 0) alert("невозможно поделить: b = 0");
+                else alert("a / b = " + (a/b));
+            }
+
+            var a, b;
+            var answer = 5;
+
+            do {
+                if (answer == 1) sum(a, b);
+                else if (answer == 2) dif(a, b);
+                else if (answer == 3) mult(a, b);
+                else if (answer == 4) div(a, b);
+                else if (answer == 5) {
+                    a = parseFloat(prompt("Введите число a: ", 10));
+                    b = parseFloat(prompt("Введите число b: ", 2));
+                }
+                
+                answer = parseInt(prompt("a = " + a + "\nb = " + b + "\n\nДля работы с числами доступны следующие команды:" + "\n1. сумма: a + b" + "\n2. разность: a - b" + "\n3. умножение: a * b" + "\n4. деление: a / b" + "\n5. ввести другие значения a и b" + "\n0. завершить работу"));
+            }
+            while (answer != 0);
+        </script>
+    </head>
+
+    <body>
+    </body>
+</html>

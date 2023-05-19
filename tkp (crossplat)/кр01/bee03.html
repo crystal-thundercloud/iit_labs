@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Canvas Animation</title>
+</head>
+
+<body>
+    <canvas id="canvas" width="200" height="200"></canvas>
+
+    <script>
+      var canvas = document.getElementById("canvas");
+      var ctx = canvas.getContext("2d");
+
+      //Рисование окружности или круга
+      var circle = function (x, y, radius, fillCircle) {
+          ctx.beginPath();
+          ctx.arc(x, y, radius, 0, Math.PI * 2, false);
+          if (fillCircle) {
+            ctx.fill();
+            } else {
+            ctx.stroke();
+          }
+        };
+    
+    //Рисование пчелы
+      var drawBee = function (x, y) {
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "Black";
+        ctx.fillStyle = "Gold";
+
+        circle(x, y, 8, true);
+        circle(x, y, 8, false);
+        circle(x - 5, y - 11, 5, false);
+        circle(x + 5, y - 11, 5, false);
+        circle(x - 2, y - 1, 2, false);
+        circle(x + 2, y - 1, 2, false);
+      };
+    
+    //Изменение координаты расположения пчелы
+      var update = function (coordinate) {
+        var offset = Math.random() * 4 - 2;
+        coordinate += offset;
+
+        if (coordinate > 200) {
+          coordinate = 200;
+        }
+        if (coordinate < 0) {
+          coordinate = 0;
+        }
+
+        return coordinate;
+      };
+
+      var x = 100;
+      var y = 100;
+
+      var angle = 0;
+      var rad = 75;
+      var center = 100;
+      var path = new Array();
+
+      // основное движение
+      setInterval(function () {
+        ctx.clearRect(0, 0, 200, 200);
+        
+        // рисование дублируется, иначе мерцает
+        ctx.fillStyle = "Gold";
+        
+        for (i = 0; i < path.length-3; i+=2) {
+          ctx.beginPath();
+          ctx.arc(path[i], path[i+1], 1, 0, Math.PI * 2, false);
+          ctx.fill();
+          ctx.closePath();
+        }
+
+        drawBee(x, y);
+        x = update(x);
+        y = update(y);
+        
+        ctx.strokeRect(0, 0, 200, 200);
+      }, 30);
+      
+      // второе движение по окружности
+      setInterval(function () {
+        ctx.clearRect(0, 0, 200, 200);
+        path.push(x, y); // запись координат для отрисовки пути
+
+        // рисование дублируется, иначе мерцает
+        ctx.fillStyle = "Gold";
+        
+        for (i = 0; i < path.length-3; i+=2) {
+          ctx.beginPath();
+          ctx.arc(path[i], path[i+1], 1, 0, Math.PI * 2, false);
+          ctx.fill();
+          ctx.closePath();
+        }
+
+        drawBee(x, y);
+        x = Math.cos(angle) * rad + center;
+        y = Math.sin(angle) * rad + center;
+        angle += 0.02;
+        
+        ctx.strokeRect(0, 0, 200, 200);
+      }, 90);
+    </script>
+</body>
+</html>

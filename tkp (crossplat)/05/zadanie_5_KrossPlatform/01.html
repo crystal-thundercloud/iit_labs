@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>ЛР4 Задание 3</title>
+
+        <meta charset="utf-8"> <!-- для корректного вывода русского языка -->
+
+        <script type="text/javascript">
+            /*
+                Создать программную модель стека, используя объектно-ориентированный подход
+            */
+
+            var stack = {
+                data: new Array(),
+                length: 0,
+                maxsize: 1,
+
+                pop() {
+                    if (this.length > 0) {
+                        let item = this.data.pop();
+                        this.length--;
+                        return item;
+                    }
+                    return "Нет";
+                },
+
+                push(item) {
+                    if (this.length < this.maxsize) {
+                        this.data.push(item);
+                        this.length++;
+                        return 1;
+                    }
+                    return 0;
+                }
+            }
+
+            var choise;
+
+            var size = parseInt(prompt("Размер стека", 2));
+
+            if (size <= 0) alert("Нельзя так");
+
+            else {
+                stack.maxsize = size;
+                var element;
+            
+                do {
+                    choice = parseInt(prompt("Работа со стеком размера " + size + "\nТекущий стек: " + stack.data + ". Размер стека: " + stack.length + "\n\nДля работы со стеком доступны следующие команды: " + "\n 1 - добавить элемент;" + "\n 2 - удалить элемент;" + "\n 0 - завершить работу: "));
+
+                    switch(choice) {
+                        case 1:
+                            element = prompt("Элемент для добавления: ", Math.floor(Math.random() * 100));
+                            if (stack.push(element) == 1)  alert("Элемент добавлен");
+                            else alert("Стек полон");
+                            break;
+                        case 2:
+                            element = stack.pop();
+                            if (element != "Нет") alert("Удаление элемента: " + element);
+                            else alert("Стек пуст.");
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                while (choice != 0);
+            }
+            alert("Конец работы.");
+            
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

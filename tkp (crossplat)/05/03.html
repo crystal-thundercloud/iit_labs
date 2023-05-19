@@ -1,0 +1,213 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>ЛР5 Задание 3</title>
+
+        <meta charset="utf-8"> <!-- для корректного вывода русского языка -->
+    </head>
+
+    <body>
+        <script type="text/javascript">
+            /*
+            Создать программную модель двусвязного списка, используя объектно-ориентированный подход
+            */
+
+            // на основании аналогичного задания по оса
+
+            class Node {
+                constructor(value) {
+                    this.value = value;
+                    this.prev = null;
+                    this.next = null;
+                }
+            }
+
+            var List = {
+                top: null,
+                root: null,
+                nodeCount: 0,
+
+                addTopNode(value) {
+                    let nd = new Node(value);
+
+                    if (this.nodeCount == 0) {
+                        this.root = nd;
+                        this.top = nd;
+                        this.nodeCount++;
+                        return "Элемент " + value + " добавлен в качестве первого элемента";
+                    }
+                    else {
+                        this.top.next = nd;
+                        nd.prev = this.top;
+                        this.top = nd;
+                        this.nodeCount++;
+                        return "Элемент " + value + " добавлен в конец";
+                    }
+                },
+
+                addRootNode(value) {
+                    let nd = new Node(value);
+
+                    if (this.nodeCount == 0) {
+                        this.root = nd;
+                        this.top = nd;
+                        this.nodeCount++;
+                        return "Элемент " + value + " добавлен в качестве первого элемента";
+                    }
+                    else {
+                        nd.next = this.root;
+                        this.root.prev = nd;
+                        this.root = nd;
+                        this.nodeCount++;
+                        return "Элемент " + value + " добавлен в начало";
+                    }
+                },
+
+                removeTopNode() {
+                    if (this.top === null) return "Список пуст";
+                    else if (this.root == this.top) return this.removeRootNode();
+
+                    let nd = this.top.prev;
+                    nd.next = null;
+                    delete this.top;
+                    this.top = nd;
+                    this.nodeCount--;
+
+                    if (this.nodeCount == 0) {
+                        this.top = null;
+                        this.root = null;
+                    }
+                    else if (this.nodeCount == 1) this.top = this.root;
+                    return "Конечный элемент удалён";
+                },
+
+                removeRootNode() {
+                    if (this.root == null) return "Список пуст";
+
+                    let nd = this.root;
+                    this.root = nd.next;
+                    nd.prev = null;
+                    delete nd;
+                    this.nodeCount--;
+
+                    if (this.nodeCount == 0) {
+                        this.top = null;
+                        this.root = null;
+                    }
+                    else if (this.nodeCount == 1) this.top = this.root;
+
+                    return "Начальный элемент удалён";
+                },
+
+                findNode(value) {
+                    if (this.nodeCount > 0) {
+                        let nd = this.root;
+                        for (let i = 0; i < this.nodeCount; i++) {
+                            if (nd.value == value) return "Элемент " + nd.value + " найден на позиции " + i;
+                            nd = nd.next;
+                        }
+                        return "Элемент не найден";
+                    }
+                    return "Список пуст";
+                },
+                
+                removeFoundNode(foundvalue) {
+                    let foundnode = this.root;
+
+                    while (foundnode.value != foundvalue) foundnode = foundnode.next;
+
+                    if (this.root == foundnode) return this.removeRootNode();
+                    else if (this.top == foundnode) return this.removeTopNode();
+                    else {
+                        foundnode.prev.next = foundnode.next;
+                        foundnode.next.prev = foundnode.prev;
+                        
+                        delete foundnode;
+                        this.nodeCount--;
+                        return "Найденный элемент " + foundvalue + " удалён";
+                    }
+                },
+
+                addAfterFoundNode(foundvalue, newvalue) {
+                    let foundnode = this.root;
+                    let addnode = new Node(newvalue);
+
+                    while (foundnode.value != foundvalue) foundnode = foundnode.next;
+                    if (this.top == foundnode) return this.addTopNode(newvalue);
+
+                    addnode.next = foundnode.next;
+                    addnode.prev = foundnode;
+                    foundnode.next = addnode;
+
+                    this.nodeCount++;
+                    return "Элемент " + newvalue + " добавлен после элемента " + foundvalue;
+                },
+
+                print() {
+                    let list = "";
+                    if (this.nodeCount > 0) {
+                        let nd = this.root;
+
+                        for (let i = 0; i < this.nodeCount; i++) {
+                            list += nd.value;
+                            if (nd.next != null) {
+                                list += ", ";
+                            }
+                            nd = nd.next;
+                        }
+                    }
+                    return list;
+                }
+            }
+
+            var choice, item;
+
+            do {
+                choice = parseInt(prompt("Текущий список: " + List.print() + "\n\nДля работы со списком доступны следующие команды: " + "\n 1 - добавить элемент в начало;" + "\n 2 - добавить элемент в конец;" + "\n 3 - удалить начальный элемент;" + "\n 4 - удалить конечный элемент;" + "\n 5 - найти элемент по значению;" + "\n 0 - завершить работу: "));
+
+                switch(choice) {
+                    case 1:
+                        item = prompt("Добавление элемента в начало." + "\n\nВведите значение элемента, который хотите добавить: ", Math.floor(Math.random() * 100));
+                        alert(List.addRootNode(item));
+                        break;
+                    case 2:
+                        item = prompt("Добавление элемента в конец." + "\n\nВведите значение элемента, который хотите добавить: ", Math.floor(Math.random() * 100));
+                        alert(List.addTopNode(item));
+                        break;
+                    case 3:
+                        alert(List.removeRootNode());
+                        break;
+                    case 4:
+                        alert(List.removeTopNode());
+                        break;
+                    case 5:
+                        item = prompt("Поиск элемента по значению." + "\n\nВведите значение искомого элемента: ");
+                        if (List.findNode(item) != "Элемент не найден" && List.findNode(item) != "Список пуст") {
+                            do {
+                                choice = parseInt(prompt(List.findNode(item) + "\n\nВы можете совершить следующие действия: " + "\n 1 - удалить найденный элемент;" + "\n 2 - добавить новый элемент после найденного;" + "\n 3 - вернуться к списку основных действий;" + "\n 0 - завершить работу: "));
+                            }
+                            while (choice < 0 && choice > 3);
+
+                            if (choice == 1) {
+                                alert(List.removeFoundNode(item));
+                            }
+                            else if (choice == 2) {
+                                let newitem = prompt("Добавление элемента после найденного." + "\n\nВведите значение элемента, который хотите добавить: ", Math.floor(Math.random() * 100));
+                                alert(List.addAfterFoundNode(item, newitem));
+                            }
+                        }
+                        else alert(List.findNode(item));
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            while (choice != 0);
+
+            alert("Завершение работы");
+
+        </script>
+    </body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Canvas Animation</title>
+</head>
+
+<body>
+    <canvas id="canvas" width="200" height="200"></canvas>
+
+    <script>
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+
+    //Рисование окружности или круга
+	var circle = function (x, y, radius, fillCircle) {
+      ctx.beginPath();
+      ctx.arc(x, y, radius, 0, Math.PI * 2, false);
+      if (fillCircle) {
+        ctx.fill();
+        } else {
+        ctx.stroke();
+      }
+    };
+	
+	//Рисование пчелы
+    var drawBee = function (x, y) {
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = "Black";
+      ctx.fillStyle = "Gold";
+
+      circle(x, y, 8, true);
+      circle(x, y, 8, false);
+      circle(x - 5, y - 11, 5, false);
+      circle(x + 5, y - 11, 5, false);
+      circle(x - 2, y - 1, 2, false);
+      circle(x + 2, y - 1, 2, false);
+    };
+	
+	//Изменение координаты расположения пчелы
+    var update = function (coordinate) {
+      var offset = Math.random() * 4 - 2;
+      coordinate += offset;
+
+      if (coordinate > 200) {
+        coordinate = 200;
+      }
+      if (coordinate < 0) {
+        coordinate = 0;
+      }
+
+      return coordinate;
+    };
+
+    var x = 100;
+    var y = 100;
+
+    setInterval(function () {
+      ctx.clearRect(0, 0, 200, 200);
+
+      drawBee(x, y);
+      x = update(x);
+      y = update(y);
+
+      ctx.strokeRect(0, 0, 200, 200);
+    }, 30);
+
+    // второе движение - большие скачки
+    setInterval(function () {
+        ctx.clearRect(0, 0, 200, 200);
+
+        drawBee(x, y);
+        x += Math.sin(x) * 15;
+        y += Math.cos(y) * 15;
+
+        ctx.strokeRect(0, 0, 200, 200);
+    }, 300);
+
+    </script>
+</body>
+</html>

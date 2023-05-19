@@ -1,0 +1,28 @@
+﻿<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Вывод на экран входящих параметров</title>
+    </head>
+    <body>
+        <form name="myform" method="post" action="script_php2.phtml">
+            Сообщение:<br>
+            <label><input type="radio" name="message" value="Добро пожаловать">Добро пожаловать</label>
+            <br>
+            <label><input type="radio" name="message" value="Добрый день">Добрый день</label>
+            <br>
+            <label><input type="radio" name="message" value="Здравствуйте">Здравствуйте</label>
+            <br>
+            <label><input type="radio" name="message" value="Рад Вас видеть">Рад Вас видеть</label>
+            <br>Имя:<br>
+            <select name="name">
+                <option value="Шмель">Шмель</option>
+                <option value="Арбуз">Арбуз</option>
+                <option value="Зебр">Зебр</option>
+            </select>
+            <br>Фон:<br>
+            <input type="color" name="bg">
+            <br>
+            <input type="submit" value="Обработать данные на сервере">
+        </form>
+    </body>
+</html>

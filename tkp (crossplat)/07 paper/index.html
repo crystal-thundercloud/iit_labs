@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>ЛР 07</title>
+        <meta http-equiv="Content-Type" content="text/html"; charset="utf-8">
+        <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.12.17/paper-full.js" integrity="sha512-z1Ws0aVF+gkSR/9Wo1d82UX7tOb80rPIa55NOTpptJr+EbyhfszWvw5nKMPn0il7T2AsNPgNjlvadGAgL/HOrA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script type="text/javascript" src="my_javascript.js"></script>
+    </head>
+    <body>
+        <h3>Рисуем круги</h3>
+        <canvas id="myCanvas" width="600px" height="300px" style="border: 1px solid"> </canvas>
+        <br>
+        <br>
+        <label>x: <input type="text" size=3 maxlength=3 id="x" value="300"/></label>
+        <label>y: <input type="text" size=3 maxlength=3 id="y" value="150"/></label>
+        <label>r: <input type="text" size=3 maxlength=3 id="r" value="10"/></label>
+        <!-- толщина обводки, цвета обводки и заливки -->
+        <label>stroke width: <input type="number" step="1" min="1" max="999" maxlength="3" id="width" value="1"></label>
+        <br>
+        <br>
+        <label>stroke color: <input type="color" id="stroke"></label>
+        <label>fill color: <input type="color" id="fill"></label>
+        <button id="draw">Нарисовать круг</button>
+        <button id="clean">Очистить холст</button>
+        <button id="generator">Сгенерировать</button>
+    </body>
+</html>

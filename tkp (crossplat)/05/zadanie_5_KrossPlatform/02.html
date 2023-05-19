@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Задание 2</title>
+
+        <meta charset="utf-8"> <!-- для корректного вывода русского языка -->
+
+        <script type="text/javascript">
+            /*
+                Создать программную модель циклической очереди, используя объектно-ориентированный подход
+            */
+           
+            var queue = {
+                data: new Array(),
+                length: 0,
+                maxsize: 1,
+                start: 0,
+                end: 0,
+
+                shift() {
+                    if (this.length > 0) {
+                        let item = this.data[this.start];
+                        this.data[this.start] = null;
+                        if(this.start == this.maxsize - 1) {
+                            this.start = 0;
+                        }
+                        else this.start++;
+                        this.length--;
+                        return item;
+                    }
+                    return "Нет";
+                },
+
+                push(item) {
+                    if (this.length < this.maxsize) {
+                        this.data[this.end] = item;
+                        if (this.end == this.maxsize - 1) {
+                            this.end = 0;
+                        }
+                        else this.end++;
+                        this.length++;
+                        return 1;
+                    }
+                    return 0;
+                },
+
+                print() {
+                    var cout = "";
+                    if (this.end == this.start && this.data[this.start] === null) return cout;
+                    for (let i = this.start; i != this.end; i++){
+                        if (i == this.maxsize) i = 0;
+                        cout += this.data[i];
+                        if (i + 1 != this.end) cout += ", ";
+                    }
+                    return cout;
+                }
+            };
+
+            var choise = 1;
+
+            var size = parseInt(prompt("Размер очереди", 2));
+
+            if (size <= 0) alert("Нельзя так");
+
+            else {
+                queue.maxsize = size;
+                var element;
+            
+                do {
+                    choice = parseInt(prompt("Работа с очередью размера " + size + "\nТекущая очередь: " + queue.print() + ". Размер очереди: " + queue.length + "\n\nДля работы с очередью доступны следующие команды: " + "\n 1 - добавить элемент;" + "\n 2 - удалить элемент;" + "\n 0 - завершить работу: "));
+
+                    switch(choice) {
+                        case 1:
+                            element = prompt("Элемент для добавления: ", Math.floor(Math.random() * 100));
+                            if (queue.push(element) == 1)  alert("Элемент добавлен");
+                            else alert("Очередь полна");
+                            break;
+                        case 2:
+                            element = queue.shift();
+                            if (element != "Нет") alert("Удаление элемента: " + element);
+                            else alert("Очередь пуста.");
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                while (choice !== 0);
+            }
+            alert("Конец работы.");
+
+        </script>
+    </head>
+
+    <body>
+    </body>
+</html>

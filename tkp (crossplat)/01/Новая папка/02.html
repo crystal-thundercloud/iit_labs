@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Задание 2</title>
+		
+		<script type="text/javascript">
+			/*
+			Для трех переменных:
+			var x = 6;
+			var y = 15;
+			var z = 4;
+			выполнить следующие выражения:
+			res = x += y - x++ * z;
+			res = z = --x - y * 5;
+			res = y /= x + 5 % z ;
+			res = z = x++ + y * 5 ;
+			res = x = y - x++ * z ;
+			и результаты вывести в окне браузера
+			*/
+			var x = 6;
+			var y = 15;
+			var z = 4;
+			var res = x += y - x++ * z; // 6 += 15 - 6++ * 4     6 + 15 - 24 = 6 - 9 = -3
+			alert("res = x += y - x++ * z = " + res); // -3  (x = -3)
+			res = z = --x - y * 5; // --(-3) - 15 * 5
+			alert("res = z = --x - y * 5 = " + res); // -79  (x = -4, z = -79)
+			res = y /= x + 5 % z;
+			alert("res = y /= x + 5 % z = " + res); // 15  (y = 15)
+			res = z = x++ + y * 5;
+			alert("res = z = x++ + y * 5 = " + res); // 71  (z = 71)
+			res = x = y - x++ * z;
+			alert("res = x = y - x++ * z = " + res); // 228
+			
+		</script>
+		
+	</head>
+	
+	<body>
+	</body>
+	
+</html>

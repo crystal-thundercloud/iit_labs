@@ -1,0 +1,194 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>ЛР4 Задание 3</title>
+
+        <meta charset="utf-8"> <!-- для корректного вывода русского языка -->
+
+        <script type="text/javascript">
+            /*
+                Создать программную модель двусвязного списка, используя объектно-ориентированный подход
+
+                Поиск элемента по заданному значению поля структуры
+                Добавление элемента после найденного
+                Удаление найденного элемента.
+            */
+
+            var list = {
+                start: null,
+                end: null,
+
+                NewNodeEnd(into){
+                    if (!this.start){
+                        this.start = {
+                            value: into,
+                            prev: null,
+                            next: null
+                        }
+                        this.end = this.start;
+                    }
+                    else{
+                        this.end.next = {
+                            value: into,
+                            prev: this.end,
+                            next: null
+                        }
+                        this.end = this.end.next;
+                    }
+                    return 1;
+                },
+
+                NewNodeStart(into){
+                    if (!this.start){
+                        this.start = {
+                            value: into,
+                            prev: null,
+                            next: null
+                        }
+                        this.end = this.start;
+                    }
+                    else{
+                        this.start.prev = {
+                            value: into,
+                            prev: null,
+                            next: this.start
+                        }
+                        this.start = this.start.prev;
+                    }
+                    return 1;
+                },
+
+                DeleteStart(){
+                    if (!this.start) return null;
+                    let obj = this.start.value;
+                    if (this.end === this.start){
+                        this.end = null;
+                        this.start = null;
+                        return obj;
+                    }
+                    this.start = this.start.next;
+                    if(!this.start) this.start.prev = null;
+                    return obj;
+                },
+
+                DeleteEnd(){
+                    if (!this.start) return null;
+                    let obj = this.end.value;
+                    if (this.end === this.start){
+                        this.end = null;
+                        this.start = null;
+                        return obj;
+                    }
+                    this.end = this.end.prev;
+                    this.end.next = null;
+                    return obj;
+                },
+
+                Find(find){
+                    if(!this.start) return null;
+                    let current = this.start;
+                    do{
+                        if (current.value === find) return 1;
+                        else current = current.next;
+                    }while(current)
+                    return 0;
+                },
+
+                DeleteFind(find){
+                    if(!this.start) return null;
+                    let currentNode = this.start;
+                    while (currentNode.value !== find) {
+                        currentNode = currentNode.next;
+                        if (!currentNode) return "Нет такого элемента";
+                    }
+                    if (currentNode === this.start) this.DeleteStart();
+                    if (currentNode === this.end) this.DeleteEnd();
+                    let prevNode = currentNode.prev;
+                    let nextNode = currentNode.next;
+                    currentNode = null;
+                    prevNode.next = nextNode;
+                    nextNode.prev = prevNode;
+                    return find;
+                },
+
+                NewNodeAfterFind(find, val){
+                    if(!this.start) return null;
+                    let currentNode = this.start;
+                    while (currentNode.value !== find) {
+                        currentNode = currentNode.next;
+                        if (!currentNode) return "Нет такого элемента";
+                    }
+                    if (currentNode === this.end) this.NewNodeEnd(val);
+                    let nextNode = currentNode.next;
+                    currentNode.next = {
+                        value: val,
+                        prev: currentNode,
+                        next: nextNode
+                    }
+                    nextNode.prev = currentNode.next;
+                    return 1;
+                },
+
+                ShowList(){
+                    var show = "";
+                    current = this.start;
+                    while(current){
+                        show += current.value;
+                        if (current.next) show += ", ";
+                        current = current.next;
+                    }
+                    return show;
+                }
+            };
+
+            var choice = 3;
+            var element;
+        
+            do {
+                choice = parseInt(prompt("Работа с двухсвязным списком. \n Нынешний список: " + list.ShowList() + ".\n\nДля работы с ним доступны следующие команды: " + "\n 1 - добавить элемент в начало;" + "\n 2 - добавить элемент в конец;" + "\n 3 - удалить начало списка" + "\n 4 - удалить конец списка"  + "\n 5 - найти элемент" + "\n 0 - завершить работу: "));
+
+                switch(choice) {
+                    case 1:
+                        element = prompt("Элемент для добавления: ", Math.floor(Math.random() * 100));
+                        if (list.NewNodeStart(element) === 1)  alert("Элемент добавлен");
+                        break;
+                    case 2:
+                        element = prompt("Элемент для добавления: ", Math.floor(Math.random() * 100));
+                        if (list.NewNodeEnd(element) === 1)  alert("Элемент добавлен");
+                        break;
+                    case 3:
+                        let DelElemStart = list.DeleteStart();
+                        if (!DelElemStart) alert("Список пуст");
+                        else alert("Элемент " + DelElemStart + " был удален");
+                        break;
+                    case 4:
+                        let DelElemEnd = list.DeleteEnd();
+                        if (!DelElemEnd) alert("Список пуст");
+                        else alert("Элемент " + DelElemEnd + " был удален");
+                        break;
+                    case 5:
+                        element = prompt("Элемент для поиска: ", Math.floor(Math.random() * 100));
+                        if (!list.Find(element)) alert("Элемент не найден");
+                        else{
+                            choice = parseInt(prompt("Что вы хотите сделать с элементом " + element + ": \n\n 1 - удалить его;" + "\n 2 - добавить элемент после него" + "\n другое число - ничего не делать:", 3));
+                            if (choice === 1) list.DeleteFind(element);
+                            else if (choice === 2){
+                                choice = prompt("Элемент для добавления: ", Math.floor(Math.random() * 100));
+                                if (list.NewNodeAfterFind(element, choice) === 1)  alert("Элемент добавлен");
+                            }
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+            while (choice !== 0);
+
+            alert("Конец работы.");
+
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
