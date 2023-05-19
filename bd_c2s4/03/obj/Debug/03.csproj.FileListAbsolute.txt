@@ -1,0 +1,11 @@
+C:\Users\cdctt\Desktop\Учебное\бд\03\bin\Debug\03.exe.config
+C:\Users\cdctt\Desktop\Учебное\бд\03\bin\Debug\03.exe
+C:\Users\cdctt\Desktop\Учебное\бд\03\bin\Debug\03.pdb
+C:\Users\cdctt\Desktop\Учебное\бд\03\obj\Debug\03.csproj.AssemblyReference.cache
+C:\Users\cdctt\Desktop\Учебное\бд\03\obj\Debug\03.csproj.SuggestedBindingRedirects.cache
+C:\Users\cdctt\Desktop\Учебное\бд\03\obj\Debug\_03.Properties.Resources.resources
+C:\Users\cdctt\Desktop\Учебное\бд\03\obj\Debug\03.csproj.GenerateResource.cache
+C:\Users\cdctt\Desktop\Учебное\бд\03\obj\Debug\03.csproj.CoreCompileInputs.cache
+C:\Users\cdctt\Desktop\Учебное\бд\03\obj\Debug\03.exe
+C:\Users\cdctt\Desktop\Учебное\бд\03\obj\Debug\03.pdb
+C:\Users\cdctt\Desktop\Учебное\бд\03\obj\Debug\_03.BD03.resources
