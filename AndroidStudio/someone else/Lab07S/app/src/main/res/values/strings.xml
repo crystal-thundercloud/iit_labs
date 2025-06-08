@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Lab07</string>
+    <string name="dialog_message">I\'m dialog window</string>
+    <string name="yes">Sure</string>
+    <string name="no">Nope</string>
+    <string name="exit">Exit app</string>
+</resources>

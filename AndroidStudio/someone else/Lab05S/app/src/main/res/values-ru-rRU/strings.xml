@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Лаб05</string>
+    <string name="text">Привет, мир!</string>
+    <string name="red">Красный</string>
+    <string name="green">Зелёный</string>
+    <string name="blue">Синий</string>
+    <string name="color">Цвет</string>
+    <string name="pow">Бах!</string>
+    <string name="exit">Выход</string>
+</resources>

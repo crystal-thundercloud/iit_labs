@@ -1,0 +1,27 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/photo"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:padding="5dp"
+        app:srcCompat="@drawable/pokemon_logo"
+        tools:srcCompat="@drawable/pokemon_logo" />
+
+    <TextView
+        android:id="@+id/detailsText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="5dp"
+        android:text="Pokémon Emerald Version is a solitary version to Pokémon Ruby and Sapphire, and is the fifth and final Generation III core series game. Like its predecessor, Pokémon Crystal, it added many features not present in the earlier paired versions. It was released in Japan on September 16, 2004, in North America on May 1, 2005, in Australia on June 9, 2005 and in Europe on October 21, 2005."
+        android:textSize="20sp" />
+
+</LinearLayout>

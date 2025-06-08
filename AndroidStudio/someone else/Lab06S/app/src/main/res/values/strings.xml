@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Lab06</string>
+    <string name="channel_name">Madness\' Basement</string>
+    <string name="channel_description">This server is completely based on Gaming &amp; Creativity.</string>
+    <string name="notification_title">You have 1 new notification</string>
+    <string name="notification_text">Click here to open the application!</string>
+    <string name="toast_text">I\'m a notification!</string>
+</resources>
