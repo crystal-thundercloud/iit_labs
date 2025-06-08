@@ -1,0 +1,15 @@
+C:\UniProjects\TOI(python)\c# console to test others code\obj\Debug\net7.0\c# console to test others code.csproj.AssemblyReference.cache
+C:\UniProjects\TOI(python)\c# console to test others code\obj\Debug\net7.0\c# console to test others code.GeneratedMSBuildEditorConfig.editorconfig
+C:\UniProjects\TOI(python)\c# console to test others code\obj\Debug\net7.0\c# console to test others code.AssemblyInfoInputs.cache
+C:\UniProjects\TOI(python)\c# console to test others code\obj\Debug\net7.0\c# console to test others code.AssemblyInfo.cs
+C:\UniProjects\TOI(python)\c# console to test others code\obj\Debug\net7.0\c# console to test others code.csproj.CoreCompileInputs.cache
+C:\UniProjects\TOI(python)\c# console to test others code\bin\Debug\net7.0\c# console to test others code.exe
+C:\UniProjects\TOI(python)\c# console to test others code\bin\Debug\net7.0\c# console to test others code.deps.json
+C:\UniProjects\TOI(python)\c# console to test others code\bin\Debug\net7.0\c# console to test others code.runtimeconfig.json
+C:\UniProjects\TOI(python)\c# console to test others code\bin\Debug\net7.0\c# console to test others code.dll
+C:\UniProjects\TOI(python)\c# console to test others code\bin\Debug\net7.0\c# console to test others code.pdb
+C:\UniProjects\TOI(python)\c# console to test others code\obj\Debug\net7.0\c# console to test others code.dll
+C:\UniProjects\TOI(python)\c# console to test others code\obj\Debug\net7.0\refint\c# console to test others code.dll
+C:\UniProjects\TOI(python)\c# console to test others code\obj\Debug\net7.0\c# console to test others code.pdb
+C:\UniProjects\TOI(python)\c# console to test others code\obj\Debug\net7.0\c# console to test others code.genruntimeconfig.cache
+C:\UniProjects\TOI(python)\c# console to test others code\obj\Debug\net7.0\ref\c# console to test others code.dll

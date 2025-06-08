@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="XSL.xsl"?>
+
+<fauna>
+    <heading title="Обитатели леса">
+        Список животных, формирующих экосистему леса в игре
+    </heading>
+
+    <animals>
+        <critter>
+            <name>Олень</name>
+            <diet>Травоядное</diet>
+            <attitude>Нейтральное</attitude>
+            <number>1-5</number>
+            <decription>Редко стоит на месте. Останавливается поесть растений, грибов или ягод. Убегает от резких звуков или если поблизости охотится хищник</decription>
+        </critter>
+        <critter>
+            <name>Лиса</name>
+            <diet>Хищник</diet>
+            <attitude>Нейтральное, агрессивное</attitude>
+            <number>1</number>
+            <decription>В основном отдыхает в норе, выбирается на охоту в любое время суток. Проявляет агрессию во время охоты</decription>
+        </critter>
+        <critter>
+            <name>Змея</name>
+            <diet>Хищник</diet>
+            <attitude>Агрессивное</attitude>
+            <number>1-2</number>
+            <decription>Перемещается по лесу, отдыхает на солнце. Нападает, если подойти слишком близко</decription>
+        </critter>
+    </animals>
+
+    <birds>
+        <critter>
+            <name>Дятел</name>
+            <diet>Насекомоядное</diet>
+            <attitude>Нейтральное, недоверие</attitude>
+            <number>2-5</number>
+            <decription>Перелетает с дерева на дерево в поисках насекомых. Большую часть времени проводит, прыгая вокруг стволов деревьев</decription>
+        </critter>
+        <critter>
+            <name>Сорока</name>
+            <diet>Всеядное</diet>
+            <attitude>Нейтральное, недоверие</attitude>
+            <number>2-3</number>
+            <decription>Подолгу сидит на ветке прежде чем перелететь на другое дерево. Если последовать за ней, можно обнаружить пищу</decription>
+        </critter>
+    </birds>
+</fauna>
