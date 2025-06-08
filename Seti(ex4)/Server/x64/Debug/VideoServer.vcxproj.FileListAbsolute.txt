@@ -1,0 +1,2 @@
+C:\UniProjects\Seti(ex4)\VideoServer\x64\Debug\Server.exe
+C:\UniProjects\Seti(ex4)\Server\x64\Debug\Server.exe

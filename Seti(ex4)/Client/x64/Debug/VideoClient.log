@@ -1,0 +1,9 @@
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(517,5): warning MSB8028: промежуточный каталог (x64\Debug\) содержит файлы, которые используются совместно с другим проектом (VideoClient.vcxproj).  Это может привести к ошибкам очистки и перестроения.
+  Client.cpp
+C:\UniProjects\Seti(ex4)\Client\Client.cpp(25,11): warning C4244: инициализация: преобразование "std::streamoff" в "int", возможна потеря данных
+C:\UniProjects\Seti(ex4)\Client\Client.cpp(128,24): warning C4244: аргумент: преобразование "uintmax_t" в "int", возможна потеря данных
+C:\UniProjects\Seti(ex4)\Client\Client.cpp(56,16): warning C4101: filePath: неиспользованная локальная переменная
+C:\UniProjects\Seti(ex4)\Client\Client.cpp(48,7): warning C4101: buf: неиспользованная локальная переменная
+C:\UniProjects\Seti(ex4)\Client\Client.cpp(48,15): warning C4101: fileName: неиспользованная локальная переменная
+C:\UniProjects\Seti(ex4)\Client\Client.cpp(48,30): warning C4101: fileSize: неиспользованная локальная переменная
+  VideoClient.vcxproj -> C:\UniProjects\Seti(ex4)\Client\x64\Debug\Client.exe
