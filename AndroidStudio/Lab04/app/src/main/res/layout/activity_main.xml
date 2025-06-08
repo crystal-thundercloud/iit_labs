@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Секретные настройки Луны"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"></Space>
+
+        <RadioGroup
+            android:id="@+id/states"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkedButton="@id/wax">
+
+            <RadioButton
+                android:id="@+id/wan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Убывающая" />
+
+            <RadioButton
+                android:id="@+id/wax"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="Растущая" />
+
+            <RadioButton
+                android:id="@+id/newmoon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Новолуние" />
+
+            <RadioButton
+                android:id="@+id/fullmoon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Полнолуние" />
+
+        </RadioGroup>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"></Space>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ToggleButton
+                android:id="@+id/showExtra"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="Дополнительно"
+                android:textOff="Показать доп. настройки"
+                android:textOn="   Скрыть доп. настройки  " />
+
+            <RadioGroup
+                android:id="@+id/colors"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:checkedButton="@id/white"
+                android:visibility="invisible">
+
+                <RadioButton
+                    android:id="@+id/blue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Голубая" />
+
+                <RadioButton
+                    android:id="@+id/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Белая" />
+
+                <RadioButton
+                    android:id="@+id/red"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Кровавая" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"></Space>
+    </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/showPos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24sp"
+        android:text="Отслеживать положение спутника"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/posText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10sp"
+        android:text="Луна ещё не упала"
+        android:textAlignment="center"
+        android:textColor="#4CAF50"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:visibility="invisible" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/moon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="false"
+            android:background="#000000"
+            android:cropToPadding="false"
+            app:srcCompat="@drawable/w_wax" />
+
+        <ImageButton
+            android:id="@+id/zoomIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20sp"
+            android:layout_marginTop="30sp"
+            android:background="#00FFFFFF"
+            android:paddingLeft="2sp"
+            android:paddingRight="-30sp"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
+            app:srcCompat="@android:drawable/btn_plus" />
+
+        <ImageButton
+            android:id="@+id/zoomOut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/zoomIn"
+            android:layout_marginLeft="20sp"
+            android:layout_marginTop="30sp"
+            android:background="#00FFFFFF"
+            android:paddingLeft="-30sp"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
+            app:srcCompat="@android:drawable/btn_minus" />
+    </RelativeLayout>
+
+</LinearLayout>

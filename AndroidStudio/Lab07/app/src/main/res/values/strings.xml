@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Lab07</string>
+    <string name="dialog_message">Я сообщенька</string>
+    <string name="yes">Агась</string>
+    <string name="no">Неть</string>
+    <string name="exit">Закрыть всё на свете</string>
+</resources>

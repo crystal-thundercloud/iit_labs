@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/text0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Какое приложение Windows XP изображено на данной картинке?"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold"/> <!-- первый текст не имеет особых параметров -->
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text0"
+        android:adjustViewBounds="true"
+        android:cropToPadding="false"
+        app:srcCompat="@drawable/msft_nostalgia_solitaire" /> <!-- картинка располагается строго под текстом -->
+
+    <RelativeLayout
+        android:id="@+id/childLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageView"
+        android:layout_marginTop="10dp"> <!-- эта группа RelativeLayout располагается ниже картинки -->
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"> <!-- группа радио не имеет особых параметров -->
+
+            <RadioButton
+                android:id="@+id/radioButton1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Пасьянс Паук" />
+
+            <RadioButton
+                android:id="@+id/radioButton2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Солитёр" />
+
+            <RadioButton
+                android:id="@+id/radioButton3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Косынка" /> <!-- все элементы радио выравниваются автоматически и находятся друг под другом -->
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@id/radioGroup"
+            android:text="Подсказка: это карточная игра, в которой нужно собрать карты в колоды от младшей карты к старшей"
+            android:textSize="20sp" /> <!-- этот блок текста находится справа от группы радио -->
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView2"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/radioGroup"
+            android:text="победитель в номинации &quot;подсказка года&quot;"
+            android:textSize="12sp" /> <!-- этот блок текста находится справа от группы радио и ниже предыдущего блока текста -->
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/radioGroup"
+            android:text="Правильный ответ:"
+            android:textSize="20sp" /> <!-- этот блок текста находится под группой радио -->
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/radioGroup"
+            android:layout_marginLeft="30dp"
+            android:layout_toRightOf="@id/textView4"
+            android:rotation="-180"
+            android:rotationY="-180"
+            android:text="rjcsyrf"
+            android:textSize="20sp" /> <!-- этот блок текста находится под группой радио и правее предыдущего блока текста -->
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/childLayout"
+        android:adjustViewBounds="true"
+        app:srcCompat="@drawable/msft_nostalgia_clippy" /> <!-- эта картинка находится ниже группы RelativeLayout -->
+
+</RelativeLayout>
