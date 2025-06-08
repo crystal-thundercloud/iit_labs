@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"pkg05","l":"App"},{"p":"pkg05","l":"Notebook"},{"p":"pkg05","l":"RepairService"},{"p":"pkg05","l":"Smartphone"},{"p":"pkg05","l":"Tech"}];updateSearchResults();
